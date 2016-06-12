@@ -1,0 +1,119 @@
+/**
+ * React Modal style
+**/
+
+$prefixCls: rc-modal;
+
+// 如果变量作为属性或 class 名则必须要以#{$variables}形式使用
+.#{$prefixCls} {
+  // 去掉 body 的滚动条
+  &-open {
+    overflow: hidden;
+
+    .#{$prefixCls}-mask,
+    .#{$prefixCls} {
+      display: block;
+    }
+
+    .#{$prefixCls} {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+  }
+
+  // Modal mask
+  &-mask {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+  }
+
+  & {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    display: none;
+    overflow: hidden;
+    // Prevent Chrome on Windows from adding a focus outline. For details, see
+    // https://github.com/twbs/bootstrap/pull/10951.
+    outline: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &-dialog{
+    /*position: absolute;*/
+    width: 100%;
+  }
+
+  &-content {
+    position: relative;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 5px;
+    outline: 0;
+  }
+
+  &-header {
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  &-title {
+  }
+
+
+  &-close {
+    position: absolute;
+    right: 15px;
+
+    transition: opacity 140ms;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1ex;
+    margin: 0;
+    opacity: .4;
+    font-size: 24px;
+    text-decoration: none;
+
+    &-x:after {
+      content: '\00d7'
+    }
+
+    &:hover,
+    &:focus {
+      opacity: .8;
+      outline: 0;
+      text-decoration: none;
+    }
+  }
+
+  &-body {
+    position: relative;
+    padding: 20px;
+  }
+
+  &-footer {
+    border-top: 1px solid #e5e5e5;
+    padding: 10px 20px 10px 10px;
+    text-align: right;
+    border-radius: 0 0 5px 5px;
+  }
+
+  @media (min-width: 544px){
+    &-dialog {
+      width: 600px;
+      margin: 30px auto;
+    }
+  }
+
+}

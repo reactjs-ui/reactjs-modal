@@ -1,0 +1,8 @@
+.example-list {
+  margin: 50px auto;
+  width: 80%;
+
+  > ol > li {
+    padding: 10px;
+  }
+}
