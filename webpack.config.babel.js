@@ -1,5 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
+import precss from 'precss';
+import autoprefixer from 'autoprefixer';
 
 const appPath = path.resolve(__dirname, 'src');
 
@@ -8,6 +10,15 @@ let webpackConfig = {
   eslint: {
     emitError: true, // 验证失败，终止
     configFile: '.eslintrc'
+  },
+  postcss () {
+    return {
+      defaults: [precss, autoprefixer],
+      cleaner: [autoprefixer({
+        flexbox: 'no-2009',
+        browsers: ['last 2 version', 'chrome >=30', 'Android >= 4.3']
+      })]
+    };
   },
   resolve: {
     root: [appPath], // 设置要加载模块根路径，该路径必须是绝对路径
@@ -25,6 +36,7 @@ let webpackConfig = {
     path: path.join(__dirname, 'dist'), //打包输出目录
     filename: '[name].js', //文件名称
     publicPath: './', //生成文件基于上下文路径
+    library: ['reactModal'],
     libraryTarget: 'umd'
   },
   module: {
@@ -46,15 +58,7 @@ let webpackConfig = {
       },
       {
         test: /\.scss/,
-        loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
-      },
-      // https://github.com/webpack/url-loader
-      {
-        test: /\.(png|jpg|gif|woff|woff2|svg)$/,
-        loader: 'url?limit=10000', // 10kb
-        query: {
-          mimetype: 'image/png'
-        }
+        loader: 'style-loader!css-loader!postcss-loader?pack=cleaner!sass-loader?outputStyle=expanded'
       }
     ]
   },

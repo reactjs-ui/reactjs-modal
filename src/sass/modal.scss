@@ -10,9 +10,11 @@ $prefixCls: rc-modal;
   &-open {
     overflow: hidden;
 
-    .#{$prefixCls}-mask,
-    .#{$prefixCls} {
+    .#{$prefixCls}-mask {
       display: block;
+    }
+    .#{$prefixCls} {
+      display: flex;
     }
 
     .#{$prefixCls} {
@@ -48,8 +50,7 @@ $prefixCls: rc-modal;
     -webkit-overflow-scrolling: touch;
   }
 
-  &-dialog{
-    /*position: absolute;*/
+  &-dialog {
     width: 100%;
   }
 
@@ -57,7 +58,7 @@ $prefixCls: rc-modal;
     position: relative;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid rgba(0,0,0,.2);
+    border: 1px solid rgba(0, 0, 0, .2);
     border-radius: 5px;
     outline: 0;
   }
@@ -69,7 +70,6 @@ $prefixCls: rc-modal;
 
   &-title {
   }
-
 
   &-close {
     position: absolute;
@@ -109,11 +109,161 @@ $prefixCls: rc-modal;
     border-radius: 0 0 5px 5px;
   }
 
-  @media (min-width: 544px){
+  @media (min-width: 544px) {
     &-dialog {
       width: 600px;
-      margin: 30px auto;
+    }
+  }
+}
+
+// 自定义显示位置
+.#{$prefixCls} {
+  &-left {
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &-right {
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &-top {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  &-bottom {
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  &-center {
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-left-top {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  &-left-bottom {
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  &-right-top {
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  &-right-bottom {
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+}
+
+// 动画效果
+.#{$prefixCls} {
+
+  // modal 动画
+  @mixin effect() {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+  }
+
+  &-zoom-enter,
+  &-zoom-appear {
+    opacity: 0;
+    @include effect();
+    animation-timing-function: cubic-bezier(0.08, 0.82, 0.17, 1);
+    animation-play-state: paused;
+  }
+
+  &-zoom-leave {
+    @include effect();
+    animation-timing-function: cubic-bezier(0.6, 0.04, 0.98, 0.34);
+    animation-play-state: paused;
+  }
+
+  &-zoom-enter.#{$prefixCls}-zoom-enter-active,
+  &-zoom-appear.#{$prefixCls}-zoom-appear-active {
+    animation-name: rcModalZoomIn;
+    animation-play-state: running;
+  }
+
+  &-zoom-leave.#{$prefixCls}-zoom-leave-active {
+    animation-name: rcModalZoomOut;
+    animation-play-state: running;
+  }
+
+  @keyframes rcModalZoomIn {
+    0% {
+      opacity: 0;
+      transform: scale(0, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1, 1);
+    }
+  }
+  @keyframes rcModalZoomOut {
+    0% {
+
+      transform: scale(1, 1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0, 0);
     }
   }
 
+  // mask animation
+  @mixin fade-effect() {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+  }
+
+  &-fade-enter,
+  &-fade-appear {
+    opacity: 0;
+    @include fade-effect();
+    animation-play-state: paused;
+  }
+
+  &-fade-leave {
+    @include fade-effect();
+    animation-play-state: paused;
+  }
+
+  &-fade-enter.#{$prefixCls}-fade-enter-active,
+  &-fade-appear.#{$prefixCls}-fade-appear-active {
+    animation-name: rcModalFadeIn;
+    animation-play-state: running;
+  }
+
+  &-fade-leave.#{$prefixCls}-fade-leave-active {
+    animation-name: rcModalFadeOut;
+    animation-play-state: running;
+  }
+
+  @keyframes rcModalFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes rcModalFadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
 }

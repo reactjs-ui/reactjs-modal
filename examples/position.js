@@ -1,20 +1,7 @@
-# reactjs-modal
-
-This is a react component for modal.
-
-## Install
-
-```
-npm install reactjs-modal --save
-```
-
-## Usage
-
-```javascript
 import React, {Component, PropTypes} from 'react';
 import {render} from 'react-dom';
 import createFragment from 'react-addons-create-fragment';
-import Modal from '../src/script/index';
+import Modal from '../src/scripts/index';
 import './sass/example.scss';
 
 class ControllableCustomRadio extends Component {
@@ -170,33 +157,3 @@ class ModalPosition extends Component {
 render(
   <ModalPosition />, document.getElementById('layout')
 );
-
-```
-
-## Options
-
-待补充
-
-
-## Example
-
-```
-npm install
-gulp example
-```
-
-http://localhost:9090
-
-## Build
-
-```
-gulp build
-```
-
-## Issue
-
-https://github.com/reactjs-ui/reactjs-modal/issues
-
-## Version
-
-Please view [here](./VERSION.md)

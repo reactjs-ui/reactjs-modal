@@ -1,6 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlwebpackPlugin from 'html-webpack-plugin';
+import precss from 'precss';
+import autoprefixer from 'autoprefixer';
 
 const ip = 'localhost';
 const port = 9090;
@@ -38,6 +40,16 @@ let webpackConfig = {
     publicPath: '/'
   },
 
+  postcss () {
+    return {
+      defaults: [precss, autoprefixer],
+      cleaner: [autoprefixer({
+        flexbox: 'no-2009',
+        browsers: ['last 2 version', 'chrome >=30', 'Android >= 4.3']
+      })]
+    };
+  },
+  
   resolve: {
     root: [appPath], // 设置要加载模块根路径，该路径必须是绝对路径
     //自动扩展文件后缀名
@@ -48,6 +60,8 @@ let webpackConfig = {
   entry: {
     index: ['./examples/index.js', webpackDevServer, hotDevServer],
     simple: ['./examples/simple.js', webpackDevServer, hotDevServer],
+    position: ['./examples/position.js', webpackDevServer, hotDevServer],
+    animation: ['./examples/animation.js', webpackDevServer, hotDevServer],
   },
 
   // 出口 让webpack把处理完成的文件放在哪里
@@ -72,20 +86,8 @@ let webpackConfig = {
         cacheDirectory: true // 开启缓存
       },
       {
-        test: /\.css/,
-        loader: 'style-loader!css-loader!postcss-loader'
-      },
-      {
         test: /\.scss/,
-        loader: 'style-loader!css-loader!postcss-loader!sass-loader?outputStyle=expanded'
-      },
-      // https://github.com/webpack/url-loader
-      {
-        test: /\.(png|jpg|gif|woff|woff2|svg)$/,
-        loader: 'url?limit=10000', // 10kb
-        query: {
-          mimetype: 'image/png'
-        }
+        loader: 'style-loader!css-loader!postcss-loader?pack=cleaner!sass-loader?outputStyle=expanded'
       }
     ]
   },
@@ -107,7 +109,13 @@ const htmlwebpackPluginConfig = {
     title: '例子列表'
   },
   simple: {
-    title: '入门例子'
+    title: '基本用法'
+  },
+  position: {
+    title: '改变展示位置'
+  },
+  animation: {
+    title: '动画效果'
   }
 };
 
