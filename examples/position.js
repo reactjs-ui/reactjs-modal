@@ -97,7 +97,7 @@ class ModalPosition extends Component {
       }
       modal = (
         <Modal
-          visible={this.state.visible}
+          visible={visible}
           onClose={this.onClose}
           title={`Modal 窗口位置 ${position ? (typeof position === 'object' ? 'right: \'10px\', top: \'20px\'' : position)  : ''}`}
           style={{width: '700px'}}
@@ -110,7 +110,7 @@ class ModalPosition extends Component {
           <pre>
             {
               ` <Modal
-  visible={this.state.visible}
+  visible={visible}
   onClose={this.onClose}
   title="Modal窗口位置"
   style={{width: '700px'}}

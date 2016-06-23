@@ -30,7 +30,8 @@ let webpackConfig = {
   },
   externals: {
     react: 'react',
-    'react-dom': 'react-dom'
+    'react-dom': 'react-dom',
+    'react-addons-css-transition-group': 'react-addons-css-transition-group'
   },
   output: {
     path: path.join(__dirname, 'dist'), //打包输出目录

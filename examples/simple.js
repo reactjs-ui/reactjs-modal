@@ -48,7 +48,7 @@ class ModalSimple extends Component {
     if (visible) {
       modal = (
         <Modal
-          visible={this.state.visible}
+          visible={visible}
           onClose={this.onClose}
           title={title}
           style={{width: '700px'}}
@@ -62,7 +62,7 @@ class ModalSimple extends Component {
           <pre>
             {
               ` <Modal
-    visible={this.state.visible}
+    visible={visible}
     onClose={this.onClose}
     title={'基本 Modal 窗口'}
     style={{width: '700px'}}

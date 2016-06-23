@@ -86,6 +86,7 @@ class ModalAnimation extends Component {
         </Modal>
       );
     }
+
     return (
       <div className="example">
         <ol className="example-list">

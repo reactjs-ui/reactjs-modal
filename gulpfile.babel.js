@@ -50,12 +50,12 @@ gulp.task('clean', () => {
 /*eslint-disable camelcase*/
 gulp.task('webpack:build', () => {
   let config = Object.create(baseConfig);
-  config.plugins = [
+  config.plugins.push(
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })
-  ];
+  );
 
   //先无压缩编译
   compiler(config, () => {
@@ -78,7 +78,7 @@ gulp.task('webpack:build', () => {
 
 
 //把 es6 解析为 es5
-gulp.task('build', () => {
+gulp.task('build', ['clean'], () => {
   gulp.start(['webpack:build']);
 });
 
