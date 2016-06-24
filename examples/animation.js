@@ -41,31 +41,31 @@ class ModalAnimation extends Component {
   render() {
     let modal;
     const {visible, animationPosition} = this.state;
-    if (visible) {
-      const footer = (
-        <div>
-          <button className="example-btn example-btn-primary" onClick={this.onClose}>
-            确认
-          </button>
-          <button className="example-btn example-btn-default" onClick={this.onClose}>
-            取消
-          </button>
-        </div>
-      );
-      modal = (
-        <Modal
-          visible={visible}
-          onClose={this.onClose}
-          title={'动画效果 Modal 窗口'}
-          bodyStyle={{height: '300px'}}
-          footer={footer}
-          animation
-          maskAnimation
-          animationPosition={animationPosition}
-        >
-          <p>可以设置 modal 窗口 动画效果</p>
-          <p>传入animationPosition指定其动画原始位置</p>
-          <h3>例子代码</h3>
+    //if (visible) {
+    const footer = (
+      <div>
+        <button className="example-btn example-btn-primary" onClick={this.onClose}>
+          确认
+        </button>
+        <button className="example-btn example-btn-default" onClick={this.onClose}>
+          取消
+        </button>
+      </div>
+    );
+    modal = (
+      <Modal
+        visible={visible}
+        onClose={this.onClose}
+        title={'动画效果 Modal 窗口'}
+        bodyStyle={{height: '300px'}}
+        footer={footer}
+        animation
+        maskAnimation
+        animationPosition={animationPosition}
+      >
+        <p>可以设置 modal 窗口 动画效果</p>
+        <p>传入animationPosition指定其动画原始位置</p>
+        <h3>例子代码</h3>
           <pre>
             {
               ` <Modal
@@ -83,9 +83,9 @@ class ModalAnimation extends Component {
 </Modal>`
             }
           </pre>
-        </Modal>
-      );
-    }
+      </Modal>
+    );
+    //}
 
     return (
       <div className="example">

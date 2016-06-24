@@ -1,5 +1,10 @@
 # React Modal 更新日志
 
+## version 0.1.3  完善功能(2016-6-24)
+
+* 当打开弹框时，给 html 也添加样式，隐藏 body 滚动条
+* 在手机端添加 touchmove事件，弹框显示时，禁止滑动，该功能利用参数preventTouchmove来控制
+
 ## version 0.1.2  完善功能(2016-6-23)
 
 * 升级 node_modules

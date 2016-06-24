@@ -30,6 +30,7 @@ class ReactModal extends Component {
     this.onClose = this.onClose.bind(this);
     this.onMaskClick = this.onMaskClick.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
+    this.preventTouch = this.preventTouch.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +39,13 @@ class ReactModal extends Component {
 
   componentDidUpdate(prevProps) {
     this.toggleModal(prevProps);
+  }
+
+  componentWillUnmount() {
+    const {preventTouchmove} = this.props;
+    if (preventTouchmove) {
+      document.body.removeEventListener('touchmove', this.preventTouch, false);
+    }
   }
 
   // 显示或隐藏模态窗口
@@ -75,17 +83,22 @@ class ReactModal extends Component {
     }
 
     scrollingEffect = true;
-    const {prefixCls} = this.props;
+    const {prefixCls, preventTouchmove} = this.props;
     let className = document.body.className;
     const scrollingClassName = `${prefixCls}-open`;
     if (className.indexOf(scrollingClassName) === -1) {
       document.body.className += ` ${scrollingClassName}`;
+      //在 html 上也加上隐藏滚动条样式
+      document.documentElement.className += ` ${scrollingClassName}`;
     }
 
     this.bodyIsOverflowing = checkBodyScrollbar();
     if (this.bodyIsOverflowing) {
       this.originalPaddingRight = document.body.style.paddingRight;
       document.body.style.paddingRight = `${this.scrollbarWidth}px`;
+    }
+    if (preventTouchmove) {
+      document.body.addEventListener('touchmove', this.preventTouch, false);
     }
   }
 
@@ -96,15 +109,21 @@ class ReactModal extends Component {
     }
     scrollingEffect = false;
 
-    const {prefixCls} = this.props;
+    const {prefixCls, preventTouchmove} = this.props;
     let className = document.body.className;
+    let htmlClassName = document.documentElement.className;
     const scrollingClassName = `${prefixCls}-open`;
     if (className.indexOf(scrollingClassName) !== -1) {
       document.body.className = className.replace(scrollingClassName, '');
+      document.documentElement.className = htmlClassName.replace(scrollingClassName, '');
     }
 
     if (this.bodyIsOverflowing) {
       document.body.style.paddingRight = this.originalPaddingRight;
+    }
+
+    if (preventTouchmove) {
+      document.body.removeEventListener('touchmove', this.preventTouch, false);
     }
   }
 
@@ -127,6 +146,11 @@ class ReactModal extends Component {
         this.onClose(e);
       }
     }
+  }
+
+  preventTouch(event) {
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   renderMask(zIndex) {
@@ -317,7 +341,8 @@ ReactModal.propTypes = {
   ]), //标题
   footer: PropTypes.element, // 底部按钮设置
   children: PropTypes.node, // 窗体内容
-  container: PropTypes.element
+  container: PropTypes.element,
+  preventTouchmove: PropTypes.bool,
 };
 
 export default ReactModal;

@@ -166,6 +166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _this.onClose = _this.onClose.bind(_this);
 	    _this.onMaskClick = _this.onMaskClick.bind(_this);
 	    _this.onKeyDown = _this.onKeyDown.bind(_this);
+	    _this.preventTouch = _this.preventTouch.bind(_this);
 	    return _this;
 	  }
 
@@ -178,6 +179,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate(prevProps) {
 	      this.toggleModal(prevProps);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      var preventTouchmove = this.props.preventTouchmove;
+
+	      if (preventTouchmove) {
+	        document.body.removeEventListener('touchmove', this.preventTouch, false);
+	      }
 	    }
 
 	    // 显示或隐藏模态窗口
@@ -228,18 +238,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 
 	      scrollingEffect = true;
-	      var prefixCls = this.props.prefixCls;
+	      var _props2 = this.props;
+	      var prefixCls = _props2.prefixCls;
+	      var preventTouchmove = _props2.preventTouchmove;
 
 	      var className = document.body.className;
 	      var scrollingClassName = prefixCls + '-open';
 	      if (className.indexOf(scrollingClassName) === -1) {
 	        document.body.className += ' ' + scrollingClassName;
+	        //在 html 上也加上隐藏滚动条样式
+	        document.documentElement.className += ' ' + scrollingClassName;
 	      }
 
 	      this.bodyIsOverflowing = (0, _checkBodyScrollbar2.default)();
 	      if (this.bodyIsOverflowing) {
 	        this.originalPaddingRight = document.body.style.paddingRight;
 	        document.body.style.paddingRight = this.scrollbarWidth + 'px';
+	      }
+	      if (preventTouchmove) {
+	        document.body.addEventListener('touchmove', this.preventTouch, false);
 	      }
 	    }
 
@@ -253,16 +270,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      scrollingEffect = false;
 
-	      var prefixCls = this.props.prefixCls;
+	      var _props3 = this.props;
+	      var prefixCls = _props3.prefixCls;
+	      var preventTouchmove = _props3.preventTouchmove;
 
 	      var className = document.body.className;
+	      var htmlClassName = document.documentElement.className;
 	      var scrollingClassName = prefixCls + '-open';
 	      if (className.indexOf(scrollingClassName) !== -1) {
 	        document.body.className = className.replace(scrollingClassName, '');
+	        document.documentElement.className = htmlClassName.replace(scrollingClassName, '');
 	      }
 
 	      if (this.bodyIsOverflowing) {
 	        document.body.style.paddingRight = this.originalPaddingRight;
+	      }
+
+	      if (preventTouchmove) {
+	        document.body.removeEventListener('touchmove', this.preventTouch, false);
 	      }
 	    }
 
@@ -276,9 +301,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'onMaskClick',
 	    value: function onMaskClick(e) {
-	      var _props2 = this.props;
-	      var closable = _props2.closable;
-	      var maskClosable = _props2.maskClosable;
+	      var _props4 = this.props;
+	      var closable = _props4.closable;
+	      var maskClosable = _props4.maskClosable;
 
 	      if (e.target === e.currentTarget && closable && maskClosable) {
 	        this.onClose(e);
@@ -287,9 +312,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'onKeyDown',
 	    value: function onKeyDown(e) {
-	      var _props3 = this.props;
-	      var closable = _props3.closable;
-	      var keyboard = _props3.keyboard;
+	      var _props5 = this.props;
+	      var closable = _props5.closable;
+	      var keyboard = _props5.keyboard;
 
 	      if (closable && keyboard) {
 	        if (e.keyCode === 27) {
@@ -298,16 +323,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
+	    key: 'preventTouch',
+	    value: function preventTouch(event) {
+	      event.preventDefault();
+	      event.stopPropagation();
+	    }
+	  }, {
 	    key: 'renderMask',
 	    value: function renderMask(zIndex) {
-	      var _props4 = this.props;
-	      var mask = _props4.mask;
-	      var prefixCls = _props4.prefixCls;
-	      var maskAnimation = _props4.maskAnimation;
-	      var visible = _props4.visible;
-	      var transitionAppearTimeout = _props4.transitionAppearTimeout;
-	      var transitionEnterTimeout = _props4.transitionEnterTimeout;
-	      var transitionLeaveTimeout = _props4.transitionLeaveTimeout;
+	      var _props6 = this.props;
+	      var mask = _props6.mask;
+	      var prefixCls = _props6.prefixCls;
+	      var maskAnimation = _props6.maskAnimation;
+	      var visible = _props6.visible;
+	      var transitionAppearTimeout = _props6.transitionAppearTimeout;
+	      var transitionEnterTimeout = _props6.transitionEnterTimeout;
+	      var transitionLeaveTimeout = _props6.transitionLeaveTimeout;
 
 	      if (mask) {
 	        var maskElement = visible ? _react2.default.createElement('div', { className: prefixCls + '-mask', style: zIndex ? { zIndex: zIndex } : null }) : null;
@@ -334,20 +365,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'renderModalContent',
 	    value: function renderModalContent(zIndex) {
-	      var _props5 = this.props;
-	      var closable = _props5.closable;
-	      var prefixCls = _props5.prefixCls;
-	      var title = _props5.title;
-	      var footer = _props5.footer;
-	      var style = _props5.style;
-	      var className = _props5.className;
-	      var children = _props5.children;
-	      var visible = _props5.visible;
-	      var bodyStyle = _props5.bodyStyle;
-	      var position = _props5.position;
-	      var transitionAppearTimeout = _props5.transitionAppearTimeout;
-	      var transitionEnterTimeout = _props5.transitionEnterTimeout;
-	      var transitionLeaveTimeout = _props5.transitionLeaveTimeout;
+	      var _props7 = this.props;
+	      var closable = _props7.closable;
+	      var prefixCls = _props7.prefixCls;
+	      var title = _props7.title;
+	      var footer = _props7.footer;
+	      var style = _props7.style;
+	      var className = _props7.className;
+	      var children = _props7.children;
+	      var visible = _props7.visible;
+	      var bodyStyle = _props7.bodyStyle;
+	      var position = _props7.position;
+	      var transitionAppearTimeout = _props7.transitionAppearTimeout;
+	      var transitionEnterTimeout = _props7.transitionEnterTimeout;
+	      var transitionLeaveTimeout = _props7.transitionLeaveTimeout;
 
 
 	      var closeEl = void 0;
@@ -511,7 +542,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  title: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]), //标题
 	  footer: _react.PropTypes.element, // 底部按钮设置
 	  children: _react.PropTypes.node, // 窗体内容
-	  container: _react.PropTypes.element
+	  container: _react.PropTypes.element,
+	  preventTouchmove: _react.PropTypes.bool
 	};
 
 	exports.default = ReactModal;
