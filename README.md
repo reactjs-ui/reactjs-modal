@@ -175,33 +175,9 @@ render(
 
 ## Options
 
-| 选项        | 类型   |  功能  |
-| --------   | ----- | ---- |
-| prefixCls | PropTypes.string| Modal 窗口 class，默认为 rc-modal|
-| className | PropTypes.string|自定义 class 样式 |
-| style | PropTypes.object|	自定义 style 比如 width 或 height |
-| bodyStyle | PropTypes.object|	自定义 modal body 的样式，比如 width height 滚动条等 |
-| zIndex | PropTypes.number| 模态窗口 zIndex |
-| visible | PropTypes.bool| Modal 窗口是否可见 |
-| closable | PropTypes.bool| 是否显示关闭按钮 |
-| onClose | PropTypes.func| 关闭窗口时回调函数 |
-| keyboard | PropTypes.bool| 按 esc 是否关闭窗口 |
-| mask | PropTypes.bool| 是否显示遮罩效果 |
-| maskClosable| PropTypes.bool|设为 true，当点击遮罩时，关闭窗口 |
-| position| PropTypes.oneOfType([PropTypes.string, PropTypes.object]) | 模态窗口显示位置，当设为字符串时，支持 top left right bottom center left-top left-bottom right-top right-bottom， 设置对象表示其坐标 {x: number,y:number} |
-| animationPosition| PropTypes.object|基于指定位置渲染动画，格式为： { x: 10, y: 20} |
-| animation| PropTypes.oneOfType([PropTypes.bool, PropTypes.string]) | 窗体是否有动画效果，如果设为 false，则不启用动画，设为 true，使用默认的动画，字符串表示自定义的动画样式|
-| maskAnimation| PropTypes.oneOfType([PropTypes.bool, PropTypes.string]) | mask是否有动画效果，如果设为 false，则不启用动画，设为 true，使用默认的动画，字符串表示自定义的动画样式 |
-| transitionAppearTimeout | PropTypes.number|动画出现持续时间 |
-| transitionEnterTimeout | PropTypes.number|动画进入持续时间 |
-| transitionLeaveTimeout | PropTypes.number|动画离开持续时间 |
-| title | PropTypes.oneOfType([PropTypes.string, PropTypes.element])|模态窗口标题 |
-| footer | PropTypes.element| 底部按钮设置 |
-| children | PropTypes.node| 窗体内容 |
-| container | PropTypes.element | 渲染模态窗口容器，默认为 document.body |
-| preventTouchmove| PropTypes.bool | 当显示模态窗口时，是否阻止 touchmove 事件 |
-  
-  
+待补充
+
+
 ## Example
 
 ```
