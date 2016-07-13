@@ -51,7 +51,6 @@ gulp.task('clean', () => {
 gulp.task('webpack:build', () => {
   let config = Object.create(baseConfig);
   config.plugins.push(
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })
@@ -76,9 +75,13 @@ gulp.task('webpack:build', () => {
   });
 });
 
+gulp.task('copy', ['clean', 'sass'], () => {
+  return gulp.src('src/styles/modal.css')
+    .pipe(gulp.dest('dist/styles'));
+});
 
 //把 es6 解析为 es5
-gulp.task('build', ['clean'], () => {
+gulp.task('build', ['copy'], () => {
   gulp.start(['webpack:build']);
 });
 

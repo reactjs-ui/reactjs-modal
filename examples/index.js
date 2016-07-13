@@ -18,6 +18,15 @@ class Index extends Component {
           <li>
             <a href="./animation.html" target="_blank">动画效果</a>
           </li>
+
+          <li>
+            <a href="./switching.html" target="_blank">模态窗口间切换</a>
+          </li>
+
+          <li>
+            <a href="./popUp.html" target="_blank">模态中打开子模态窗口</a>
+          </li>
+
         </ol>
       </div>
     );

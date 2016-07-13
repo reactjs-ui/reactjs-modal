@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {render} from 'react-dom';
 import Modal from '../src/scripts/index';
+import '../src/sass/modal.scss';
 import './sass/example.scss';
 
 class ModalSimple extends Component {
@@ -54,6 +55,7 @@ class ModalSimple extends Component {
           style={{width: '700px'}}
           bodyStyle={{height: '400px'}}
           footer={footer}
+          keyboard
         >
           <p>这是一个简单的 Modal</p>
           <p>基于 React 实现，参考 bootstrap</p>

@@ -3,7 +3,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import scrollbarWidth from 'perfect-dom/lib/scrollbarWidth';
 import checkBodyScrollbar from 'perfect-dom/lib/checkBodyScrollbar';
 import offset from 'perfect-dom/lib/offset';
-import '../sass/modal.scss';
 
 let scrollingEffect = false;
 const positionKey = ['left', 'right', 'top', 'bottom'];
@@ -109,21 +108,23 @@ class ReactModal extends Component {
     }
     scrollingEffect = false;
 
-    const {prefixCls, preventTouchmove} = this.props;
-    let className = document.body.className;
-    let htmlClassName = document.documentElement.className;
-    const scrollingClassName = `${prefixCls}-open`;
-    if (className.indexOf(scrollingClassName) !== -1) {
-      document.body.className = className.replace(scrollingClassName, '');
-      document.documentElement.className = htmlClassName.replace(scrollingClassName, '');
-    }
-
-    if (this.bodyIsOverflowing) {
-      document.body.style.paddingRight = this.originalPaddingRight;
-    }
-
+    const {prefixCls, preventTouchmove, hideAllModal} = this.props;
     if (preventTouchmove) {
       document.body.removeEventListener('touchmove', this.preventTouch, false);
+    }
+
+    if (hideAllModal) {
+      let className = document.body.className;
+      let htmlClassName = document.documentElement.className;
+      const scrollingClassName = `${prefixCls}-open`;
+      if (className.indexOf(scrollingClassName) !== -1) {
+        document.body.className = className.replace(scrollingClassName, '');
+        document.documentElement.className = htmlClassName.replace(scrollingClassName, '');
+      }
+
+      if (this.bodyIsOverflowing) {
+        document.body.style.paddingRight = this.originalPaddingRight;
+      }
     }
   }
 
@@ -185,7 +186,7 @@ class ReactModal extends Component {
   renderModalContent(zIndex) {
     const {
       closable, prefixCls, title, footer, style,
-      className, children, visible, bodyStyle, position,
+      className, children, visible, bodyStyle, footerStyle, position,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout
     } = this.props;
 
@@ -211,7 +212,7 @@ class ReactModal extends Component {
 
     let footerEl;
     if (footer) {
-      footerEl = (<div className={`${prefixCls}-footer`}>
+      footerEl = (<div className={`${prefixCls}-footer`} style={footerStyle}>
         {footer}
       </div>);
     }
@@ -300,7 +301,8 @@ ReactModal.defaultProps = {
   position: 'center',
   transitionAppearTimeout: 300, //动画出现持续时间
   transitionEnterTimeout: 300, //动画进入持续时间
-  transitionLeaveTimeout: 300  //动画离开持续时间
+  transitionLeaveTimeout: 300,  //动画离开持续时间
+  hideAllModal: true
 };
 
 ReactModal.propTypes = {
@@ -308,6 +310,7 @@ ReactModal.propTypes = {
   className: PropTypes.string, //自定义 class 样式
   style: PropTypes.object, //	自定义 style 比如 width 或 height
   bodyStyle: PropTypes.object, //	自定义 modal body 的样式，比如 width height 滚动条等
+  footerStyle: PropTypes.object, //	自定义 modal footer 的样式，比如 width height 滚动条等
   zIndex: PropTypes.number, // 模态窗口 zIndex
   visible: PropTypes.bool, // Modal 窗口是否可见
   closable: PropTypes.bool, // 是否显示关闭按钮
@@ -343,6 +346,7 @@ ReactModal.propTypes = {
   children: PropTypes.node, // 窗体内容
   container: PropTypes.element, //渲染模态窗口容器，默认为 document.body
   preventTouchmove: PropTypes.bool, //当显示模态窗口时，是否阻止 touchmove 事件
+  hideAllModal: PropTypes.bool, // 当打开多个模态窗口时，根据该属性来控制是否关闭所有模态窗口
 };
 
 export default ReactModal;

@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {render} from 'react-dom';
 import Modal from '../src/scripts/index';
+import '../src/sass/modal.scss';
 import './sass/example.scss';
 
 class ModalAnimation extends Component {

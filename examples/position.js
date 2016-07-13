@@ -1,52 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import {render} from 'react-dom';
-import createFragment from 'react-addons-create-fragment';
 import Modal from '../src/scripts/index';
+import ControllableCustomRadio from './ControllableCustomRadio';
+import '../src/sass/modal.scss';
 import './sass/example.scss';
 
-class ControllableCustomRadio extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: this.props.defaultValue
-    };
-  }
-
-  handleChange(event) {
-    if (this.props.onChange) {
-      this.props.onChange(event);
-    }
-    this.setState({
-      value: event.target.value
-    });
-  }
-
-  render() {
-    let children = {};
-    const value = this.props.value || this.state.value;
-    React.Children.forEach(this.props.children, (child, i) => {
-      const label = (
-        <label style={{marginRight: '10px'}}>
-          <input type="radio" name={this.props.name} value={child.props.value} checked={child.props.value === value}
-                 onChange={this.handleChange.bind(this)}/>
-          {child.props.children}
-        </label>
-      );
-      children[`label${i}`] = label;
-    });
-    return <div>{createFragment(children)}</div>;
-  }
-}
-
-ControllableCustomRadio.propTypes = {
-  defaultValue: PropTypes.string,
-  onChange: PropTypes.func,
-  value: PropTypes.string,
-  name: PropTypes.string,
-  children: PropTypes.array
-};
-
-/*eslint-disable react/no-multi-comp*/
 class ModalPosition extends Component {
   constructor(props) {
     super(props);
@@ -130,7 +88,7 @@ class ModalPosition extends Component {
     return (
       <div className="example">
         <p>位置：</p>
-        <ControllableCustomRadio name="position" value={this.state.position} onChange={this.handleChange.bind(this)}>
+        <ControllableCustomRadio name="position" value={this.state.position} onChange={this.handleChange}>
           <option value="left">左</option>
           <option value="right">右</option>
           <option value="top">上</option>

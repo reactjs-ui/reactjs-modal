@@ -49,7 +49,7 @@ let webpackConfig = {
       })]
     };
   },
-  
+
   resolve: {
     root: [appPath], // 设置要加载模块根路径，该路径必须是绝对路径
     //自动扩展文件后缀名
@@ -62,6 +62,8 @@ let webpackConfig = {
     simple: ['./examples/simple.js', webpackDevServer, hotDevServer],
     position: ['./examples/position.js', webpackDevServer, hotDevServer],
     animation: ['./examples/animation.js', webpackDevServer, hotDevServer],
+    switching: ['./examples/switching.js', webpackDevServer, hotDevServer],
+    popUp: ['./examples/popUp.js', webpackDevServer, hotDevServer],
   },
 
   // 出口 让webpack把处理完成的文件放在哪里
@@ -93,7 +95,6 @@ let webpackConfig = {
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(), //
     new webpack.HotModuleReplacementPlugin(), // 热部署替换模块
     new webpack.NoErrorsPlugin() //
   ]
@@ -116,6 +117,12 @@ const htmlwebpackPluginConfig = {
   },
   animation: {
     title: '动画效果'
+  },
+  switching: {
+    title: '模态窗口间切换'
+  },
+  popUp: {
+    title: '模态中打开子模态窗口'
   }
 };
 

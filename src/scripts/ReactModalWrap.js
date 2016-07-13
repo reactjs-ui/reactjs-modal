@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import ReactDOM from 'react-dom';
 import ReactModal from './ReactModal';
-import '../sass/modal.scss';
 
 /**!
  * Modal React Component
@@ -9,6 +8,8 @@ import '../sass/modal.scss';
  *
  */
 class ReactModalWrap extends Component {
+  static modalUuid = 1;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -46,6 +47,7 @@ class ReactModalWrap extends Component {
       ReactDOM.unmountComponentAtNode(this.modalContainer);
       document.body.removeChild(this.modalContainer);
       this.modalContainer = null;
+      this.modalUuid = null;
     }
   }
 
@@ -56,7 +58,7 @@ class ReactModalWrap extends Component {
        * ReactDOM.unstable_renderSubtreeIntoContainer(parentComponent, nextElement, container, callback);
        * parentComponent--父组件  nextElement--下一个组件  container--要绑定的dom
        */
-      this.modal = ReactDOM.unstable_renderSubtreeIntoContainer(this,
+      this.modalInstance = ReactDOM.unstable_renderSubtreeIntoContainer(this,
         this.renderModal(), this.renderModalContainer());
     }
   }
@@ -77,13 +79,16 @@ class ReactModalWrap extends Component {
 
   //渲染 Modal 窗口
   renderModal() {
+    if (!this.modalUuid) {
+      this.modalUuid = `modal${ReactModalWrap.modalUuid++}`;
+    }
     const props = this.props;
     let modalProps = {
       ...props,
       visible: this.state.visible
     };
     //设置 key 不会重复创建
-    return (<ReactModal {...modalProps} key="modal">
+    return (<ReactModal {...modalProps} key={this.modalUuid}>
       {props.children}
     </ReactModal>);
   }
