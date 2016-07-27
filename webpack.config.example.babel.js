@@ -107,7 +107,7 @@ const entry = webpackConfig.entry;
 // 为 HtmlwebpackPlugin 设置配置项，与 entry 键对应，根据需要设置其参数值
 const htmlwebpackPluginConfig = {
   index: {
-    title: '例子列表'
+    title: 'React Modal 例子列表'
   },
   simple: {
     title: '基本用法'

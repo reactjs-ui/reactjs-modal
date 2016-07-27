@@ -242,13 +242,12 @@ var ReactModal = function (_Component) {
       var prefixCls = _props2.prefixCls;
       var preventTouchmove = _props2.preventTouchmove;
 
-      var className = document.body.className;
+      var classList = document.body.classList;
+      var htmlClassList = document.documentElement.classList;
       var scrollingClassName = prefixCls + '-open';
-      if (className.indexOf(scrollingClassName) === -1) {
-        document.body.className += ' ' + scrollingClassName;
-        //在 html 上也加上隐藏滚动条样式
-        document.documentElement.className += ' ' + scrollingClassName;
-      }
+      classList.add(scrollingClassName);
+      //在 html 上也加上隐藏滚动条样式
+      htmlClassList.add(scrollingClassName);
 
       this.bodyIsOverflowing = (0, _checkBodyScrollbar2.default)();
       if (this.bodyIsOverflowing) {
@@ -280,13 +279,11 @@ var ReactModal = function (_Component) {
       }
 
       if (hideAllModal) {
-        var className = document.body.className;
-        var htmlClassName = document.documentElement.className;
+        var classList = document.body.classList;
+        var htmlClassList = document.documentElement.classList;
         var scrollingClassName = prefixCls + '-open';
-        if (className.indexOf(scrollingClassName) !== -1) {
-          document.body.className = className.replace(scrollingClassName, '');
-          document.documentElement.className = htmlClassName.replace(scrollingClassName, '');
-        }
+        classList.remove(scrollingClassName);
+        htmlClassList.remove(scrollingClassName);
 
         if (this.bodyIsOverflowing) {
           document.body.style.paddingRight = this.originalPaddingRight;
@@ -339,12 +336,13 @@ var ReactModal = function (_Component) {
       var prefixCls = _props6.prefixCls;
       var maskAnimation = _props6.maskAnimation;
       var visible = _props6.visible;
+      var className = _props6.className;
       var transitionAppearTimeout = _props6.transitionAppearTimeout;
       var transitionEnterTimeout = _props6.transitionEnterTimeout;
       var transitionLeaveTimeout = _props6.transitionLeaveTimeout;
 
       if (mask) {
-        var maskElement = visible ? _react2.default.createElement('div', { className: prefixCls + '-mask', style: zIndex ? { zIndex: zIndex } : null }) : null;
+        var maskElement = visible ? _react2.default.createElement('div', { className: prefixCls + '-mask ' + (className || ''), style: zIndex ? { zIndex: zIndex } : null }) : null;
         if (maskAnimation) {
           if (typeof maskAnimation === 'boolean') {
             maskAnimation = prefixCls + '-fade';

@@ -1,5 +1,9 @@
 # React Modal 更新日志
 
+## version 0.2.1  为 mask 添加自定义 class(2016-7-27)
+
+* 当设置自定义 className 时，也可以修改 mask 的 class 样式
+
 ## version 0.2.0  完善功能(2016-7-13)
 
 * 解决 webpack 不能正确处理 flex 相关样式加前缀 -webkit 的问题，目前把 css 单独出来，后续看插件是否支持

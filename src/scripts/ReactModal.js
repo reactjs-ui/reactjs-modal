@@ -83,13 +83,12 @@ class ReactModal extends Component {
 
     scrollingEffect = true;
     const {prefixCls, preventTouchmove} = this.props;
-    let className = document.body.className;
+    const classList = document.body.classList;
+    const htmlClassList = document.documentElement.classList;
     const scrollingClassName = `${prefixCls}-open`;
-    if (className.indexOf(scrollingClassName) === -1) {
-      document.body.className += ` ${scrollingClassName}`;
-      //在 html 上也加上隐藏滚动条样式
-      document.documentElement.className += ` ${scrollingClassName}`;
-    }
+    classList.add(scrollingClassName);
+    //在 html 上也加上隐藏滚动条样式
+    htmlClassList.add(scrollingClassName);
 
     this.bodyIsOverflowing = checkBodyScrollbar();
     if (this.bodyIsOverflowing) {
@@ -114,13 +113,11 @@ class ReactModal extends Component {
     }
 
     if (hideAllModal) {
-      let className = document.body.className;
-      let htmlClassName = document.documentElement.className;
+      let classList = document.body.classList;
+      let htmlClassList = document.documentElement.classList;
       const scrollingClassName = `${prefixCls}-open`;
-      if (className.indexOf(scrollingClassName) !== -1) {
-        document.body.className = className.replace(scrollingClassName, '');
-        document.documentElement.className = htmlClassName.replace(scrollingClassName, '');
-      }
+      classList.remove(scrollingClassName);
+      htmlClassList.remove(scrollingClassName);
 
       if (this.bodyIsOverflowing) {
         document.body.style.paddingRight = this.originalPaddingRight;
@@ -156,12 +153,12 @@ class ReactModal extends Component {
 
   renderMask(zIndex) {
     let {
-      mask, prefixCls, maskAnimation, visible,
+      mask, prefixCls, maskAnimation, visible, className,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout
     } = this.props;
     if (mask) {
       const maskElement = visible ?
-        (<div className={`${prefixCls}-mask`} style={zIndex ? {zIndex} : null}></div>) : null;
+        (<div className={`${prefixCls}-mask ${className || ''}`} style={zIndex ? {zIndex} : null}></div>) : null;
       if (maskAnimation) {
         if (typeof maskAnimation === 'boolean') {
           maskAnimation = `${prefixCls}-fade`;
