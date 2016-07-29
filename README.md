@@ -215,11 +215,15 @@ http://localhost:9090
 
 ## Online Example
 
+http://reactjs-ui.github.io/reactjs-modal/
 
 ## Build Example
 
 ```
 gulp example:build
+git add -A _book
+git commit -m "Update online examples"
+git subtree push --prefix=examples-dist origin gh-pages --squash
 ```
 
 ## Build

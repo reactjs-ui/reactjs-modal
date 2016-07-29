@@ -1,5 +1,9 @@
 # React Modal 更新日志
 
+## version 0.2.2  生成在线例子 (2016-7-29)
+
+* 生成在线例子，方便用户查看在线例子
+
 ## version 0.2.1  为 mask 添加自定义 class(2016-7-27)
 
 * 当设置自定义 className 时，也可以修改 mask 的 class 样式
