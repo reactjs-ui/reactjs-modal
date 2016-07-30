@@ -8,6 +8,29 @@ This is a react component for modal.
 npm install reactjs-modal --save
 ```
 
+## Example
+
+```
+npm install
+gulp example
+```
+
+http://localhost:9090
+
+## Online Example
+
+http://reactjs-ui.github.io/reactjs-modal/
+
+## Build Example
+
+```
+gulp example:build
+git add -A _book
+git commit -m "Update online examples"
+git subtree push --prefix=examples-dist origin gh-pages --squash
+```
+
+
 ## Usage
 
 ```javascript
@@ -203,29 +226,6 @@ render(
 | preventTouchmove| PropTypes.bool | 当显示模态窗口时，是否阻止 touchmove 事件 |
 | hideAllModal| PropTypes.bool | 当打开多个模态窗口时，根据该属性来控制是否关闭所有模态窗口 |
   
-  
-## Example
-
-```
-npm install
-gulp example
-```
-
-http://localhost:9090
-
-## Online Example
-
-http://reactjs-ui.github.io/reactjs-modal/
-
-## Build Example
-
-```
-gulp example:build
-git add -A _book
-git commit -m "Update online examples"
-git subtree push --prefix=examples-dist origin gh-pages --squash
-```
-
 ## Build
 
 ```
