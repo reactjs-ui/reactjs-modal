@@ -83,13 +83,13 @@ class ReactModalWrap extends Component {
       this.modalUuid = `modal${ReactModalWrap.modalUuid++}`;
     }
     const props = this.props;
-    let modalProps = {
+    const modalProps = {
       ...props,
       visible: this.state.visible
     };
     //设置 key 不会重复创建
     return (<ReactModal {...modalProps} key={this.modalUuid}>
-      {props.children}
+      {this.props.children}
     </ReactModal>);
   }
 
@@ -103,7 +103,7 @@ class ReactModalWrap extends Component {
 ReactModalWrap.propTypes = {
   visible: PropTypes.bool, // Modal 窗口是否可见
   children: PropTypes.node,
-  container: PropTypes.element
+  container: PropTypes.element //渲染模态窗口容器，默认为 document.body
 };
 
 export default ReactModalWrap;

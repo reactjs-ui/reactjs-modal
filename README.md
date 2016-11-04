@@ -22,14 +22,50 @@ http://localhost:9090
 http://reactjs-ui.github.io/reactjs-modal/
 
 ## Build Example
+第一次需要先执行前两步操作，再执行第三步。以后修改例子后，只需要执行第三步即可
 
+* 创建 gh-pages 分支，**在执行 git subtree add 命令之前，需确保 gh-pages 分支下至少存在一个文件**
+```
+git branch gh-pages
+git checkout gh-pages
+rm -rf *     //隐藏文件需要单独删除，结合命令 ls -a
+git add -A
+git commit -m "clear gh-page"
+git push --set-upstream origin gh-pages
+vim README.md
+//输入一些内容
+git add README.md
+git commit -m "README.md"
+git push
+git checkout master
+```
+
+* 把分支 gh-pages 添加到本地 subtree 中，执行该命令前，请确保 examples-dist 文件夹不存在
+
+```
+git subtree add --prefix=examples-dist origin gh-pages --squash
+```
+  
+* 生成在线 examples
 ```
 gulp example:build
-git add -A _book
+git add -A examples-dist
 git commit -m "Update online examples"
 git subtree push --prefix=examples-dist origin gh-pages --squash
+git push
 ```
 
+## Build
+
+```
+gulp build
+```
+
+## Publish
+
+```
+gulp publish
+```
 
 ## Usage
 
@@ -226,12 +262,6 @@ render(
 | preventTouchmove| PropTypes.bool | 当显示模态窗口时，是否阻止 touchmove 事件 |
 | hideAllModal| PropTypes.bool | 当打开多个模态窗口时，根据该属性来控制是否关闭所有模态窗口 |
   
-## Build
-
-```
-gulp build
-```
-
 ## Issue
 
 https://github.com/reactjs-ui/reactjs-modal/issues

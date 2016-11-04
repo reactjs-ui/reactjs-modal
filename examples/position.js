@@ -12,32 +12,30 @@ class ModalPosition extends Component {
       visible: false,
       position: 'center'
     };
-    this.onClose = this.onClose.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  onClick(e) {
+  onClick = (e) => {
     this.setState({
       visible: true
     });
-  }
+  };
 
-  onClose(e) {
+  onClose = (e) => {
     this.setState({
       visible: false
     });
-  }
+  };
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({
       position: event.target.value
     });
-  }
+  };
 
   render() {
     let modal;
-    let {visible, position} = this.state;
+    const {visible} = this.state;
+    let {position} = this.state;
     if (visible) {
       const footer = (
         <div>
@@ -57,7 +55,7 @@ class ModalPosition extends Component {
         <Modal
           visible={visible}
           onClose={this.onClose}
-          title={`Modal 窗口位置 ${position ? (typeof position === 'object' ? 'right: \'10px\', top: \'20px\'' : position)  : ''}`}
+          title={`Modal 窗口位置 ${position ? (typeof position === 'object' ? 'right: \'10px\', top: \'20px\'' : position) : ''}`}
           style={{width: '700px'}}
           footer={footer}
           position={position}

@@ -113,8 +113,8 @@ class ReactModal extends Component {
     }
 
     if (hideAllModal) {
-      let classList = document.body.classList;
-      let htmlClassList = document.documentElement.classList;
+      const classList = document.body.classList;
+      const htmlClassList = document.documentElement.classList;
       const scrollingClassName = `${prefixCls}-open`;
       classList.remove(scrollingClassName);
       htmlClassList.remove(scrollingClassName);
@@ -152,13 +152,15 @@ class ReactModal extends Component {
   }
 
   renderMask(zIndex) {
-    let {
-      mask, prefixCls, maskAnimation, visible, className,
+    const {
+      mask, prefixCls, visible, className,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout
     } = this.props;
+    let {maskAnimation} = this.props;
     if (mask) {
       const maskElement = visible ?
-        (<div className={`${prefixCls}-mask ${className || ''}`} style={zIndex ? {zIndex} : null}></div>) : null;
+        (<div className={`${prefixCls}-mask ${className || ''}`}
+              style={zIndex ? {zIndex} : null} />) : null;
       if (maskAnimation) {
         if (typeof maskAnimation === 'boolean') {
           maskAnimation = `${prefixCls}-fade`;
@@ -214,7 +216,7 @@ class ReactModal extends Component {
       </div>);
     }
 
-    let modalStyle = {...style};
+    const modalStyle = {...style};
     if (visible) {
       modalStyle.display = null;
     }
@@ -273,7 +275,7 @@ class ReactModal extends Component {
   }
 
   render() {
-    let {zIndex} = this.props;
+    const {zIndex} = this.props;
     let maskZIndex;
     let modalZIndex;
     if (zIndex !== undefined && zIndex !== null) {
@@ -305,9 +307,9 @@ ReactModal.defaultProps = {
 ReactModal.propTypes = {
   prefixCls: PropTypes.string, // Modal 窗口 class，默认为 rc-modal
   className: PropTypes.string, //自定义 class 样式
-  style: PropTypes.object, //	自定义 style 比如 width 或 height
-  bodyStyle: PropTypes.object, //	自定义 modal body 的样式，比如 width height 滚动条等
-  footerStyle: PropTypes.object, //	自定义 modal footer 的样式，比如 width height 滚动条等
+  style: PropTypes.object, // 自定义 style 比如 width 或 height
+  bodyStyle: PropTypes.object, // 自定义 modal body 的样式，比如 width height 滚动条等
+  footerStyle: PropTypes.object, // 自定义 modal footer 的样式，比如 width height 滚动条等
   zIndex: PropTypes.number, // 模态窗口 zIndex
   visible: PropTypes.bool, // Modal 窗口是否可见
   closable: PropTypes.bool, // 是否显示关闭按钮
@@ -341,7 +343,6 @@ ReactModal.propTypes = {
   ]), //标题
   footer: PropTypes.element, // 底部按钮设置
   children: PropTypes.node, // 窗体内容
-  container: PropTypes.element, //渲染模态窗口容器，默认为 document.body
   preventTouchmove: PropTypes.bool, //当显示模态窗口时，是否阻止 touchmove 事件
   hideAllModal: PropTypes.bool, // 当打开多个模态窗口时，根据该属性来控制是否关闭所有模态窗口
 };

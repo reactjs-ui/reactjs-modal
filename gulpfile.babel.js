@@ -3,6 +3,7 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import opn from 'opn';
+import childProcess from 'child_process';
 import baseConfig from './webpack.config.babel';
 import exampleConfig from './webpack.config.example.babel';
 import exampleDistConfig from './webpack.config.example.dist.babel';
@@ -43,7 +44,7 @@ gulp.task('sass', () => {
 
 //清理临时和打包目录
 gulp.task('clean', () => {
-  return gulp.src(['dist'])
+  return gulp.src(['dist', 'publish/dist', 'publish/src'])
     .pipe($.clean({force: true}));
 });
 
@@ -118,6 +119,33 @@ gulp.task('example:build', () => {
       colors: true
     }));
   });
+});
+
+//运行 example
+gulp.task('example', () => {
+  gulp.start(['sass']);
+  gulp.watch('src/sass/*.scss', ['sass']);
+
+  // Start a webpack-dev-server
+  const compiler = webpack(webpackConfig);
+  new WebpackDevServer(compiler, webpackConfig.devServer)
+    .listen(port, ip, (err) => {
+      if (err) {
+        throw new $.util.PluginError('webpack-dev-server', err);
+      }
+      // Server listening
+      $.util.log('[webpack-dev-server]', `http://${ip}:${port}/`);
+
+      // keep the server alive or continue?
+      opn(port === '80' ? `http://${ip}` : `http://${ip}:${port}/`, {app: 'google chrome'});
+    });
+});
+
+//打包编译例子
+gulp.task('publish', () => {
+  const exec = childProcess.exec;
+  exec('cp -R dist publish');
+  exec('cp -R src publish');
 });
 
 

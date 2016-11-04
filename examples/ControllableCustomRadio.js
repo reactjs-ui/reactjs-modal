@@ -7,20 +7,19 @@ class ControllableCustomRadio extends Component {
     this.state = {
       value: this.props.defaultValue
     };
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     if (this.props.onChange) {
       this.props.onChange(event);
     }
     this.setState({
       value: event.target.value
     });
-  }
+  };
 
   render() {
-    let children = {};
+    const children = {};
     const value = this.props.value || this.state.value;
     React.Children.forEach(this.props.children, (child, i) => {
       const label = (
@@ -44,4 +43,4 @@ ControllableCustomRadio.propTypes = {
   children: PropTypes.array
 };
 
-export default  ControllableCustomRadio;
+export default ControllableCustomRadio;

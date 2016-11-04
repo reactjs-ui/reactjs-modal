@@ -12,35 +12,34 @@ class ModalAnimation extends Component {
       animationPosition: null,
       destroyOnClose: false
     };
-    this.onClose = this.onClose.bind(this);
-    this.onClick = this.onClick.bind(this);
   }
 
-  onClick(e, ap) {
-    if (ap) {
-      this.setState({
-        visible: true,
-        animationPosition: {
-          x: 5000,
-          y: 5000
-        }
-      });
-    } else {
-      this.setState({
-        visible: true,
-        animationPosition: null
-      });
+  onClick = (ap) => {
+    return () => {
+      if (ap) {
+        this.setState({
+          visible: true,
+          animationPosition: {
+            x: 5000,
+            y: 5000
+          }
+        });
+      } else {
+        this.setState({
+          visible: true,
+          animationPosition: null
+        });
+      }
     }
-  }
+  };
 
-  onClose(e) {
+  onClose = () => {
     this.setState({
       visible: false
     });
-  }
+  };
 
   render() {
-    let modal;
     const {visible, animationPosition} = this.state;
     //if (visible) {
     const footer = (
@@ -53,7 +52,7 @@ class ModalAnimation extends Component {
         </button>
       </div>
     );
-    modal = (
+    const modal = (
       <Modal
         visible={visible}
         onClose={this.onClose}
@@ -67,7 +66,7 @@ class ModalAnimation extends Component {
         <p>可以设置 modal 窗口 动画效果</p>
         <p>传入animationPosition指定其动画原始位置</p>
         <h3>例子代码</h3>
-          <pre>
+        <pre>
             {
               ` <Modal
     visible={visible}
@@ -92,13 +91,14 @@ class ModalAnimation extends Component {
       <div className="example">
         <ol className="example-list">
           <li>
-            <button className="example-btn example-btn-default" onClick={this.onClick}>
+            <button className="example-btn example-btn-default" onClick={this.onClick()}>
               默认动画
             </button>
           </li>
 
           <li>
-            <button className="example-btn example-btn-default" onClick={(e) => this.onClick(e, true)}>
+            <button className="example-btn example-btn-default"
+                    onClick={this.onClick(true)}>
               指定动画起始位置
             </button>
           </li>

@@ -14,40 +14,39 @@ class ModalPopUp extends Component {
       maskAnimation: false,
       hideAllModal: false
     };
-    this.onClose = this.onClose.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange() {
+  handleChange = () => {
     this.setState({
       animation: !this.state.animation,
       maskAnimation: !this.state.maskAnimation
     });
-  }
+  };
 
-  onClick(e, index) {
-    this.setState({
-      [`visible${index}`]: true
-    });
-  }
-
-  onClose(index) {
-    const {animation} = this.state;
-
-    if (index === 2) {
+  onClick = (index) => {
+    return () => {
       this.setState({
-        visible2: false,
-        hideAllModal: false
-      });
-    } else {
-      this.setState({
-        visible2: false,
-        visible1: false,
-        hideAllModal: true
+        [`visible${index}`]: true
       });
     }
-  }
+  };
+
+  onClose = (index) => {
+    return () => {
+      if (index === 2) {
+        this.setState({
+          visible2: false,
+          hideAllModal: false
+        });
+      } else {
+        this.setState({
+          visible2: false,
+          visible1: false,
+          hideAllModal: true
+        });
+      }
+    }
+  };
 
   renderModal1() {
     const {visible1, animation, maskAnimation} = this.state;
@@ -55,13 +54,13 @@ class ModalPopUp extends Component {
     return (
       <Modal
         visible={visible1}
-        onClose={this.onClose}
+        onClose={this.onClose()}
         title="父模态窗口"
         style={{width: '500px'}}
         bodyStyle={{height: '300px'}}
         footer={(
           <div>
-          <button className="example-btn example-btn-primary"  onClick={(e) => {this.onClick(e, 2)}}>
+          <button className="example-btn example-btn-primary" onClick={this.onClick(2)}>
             打开子窗口
           </button>
         </div>
@@ -81,16 +80,16 @@ class ModalPopUp extends Component {
     return (
       <Modal
         visible={visible2}
-        onClose={() => {this.onClose(2)}}
+        onClose={this.onClose(2)}
         title="子模态窗口"
         style={{width: '400px'}}
         bodyStyle={{height: '200px'}}
         footer={(
           <div>
-          <button className="example-btn example-btn-primary" onClick={() => {this.onClose(2)}}>
+          <button className="example-btn example-btn-primary" onClick={this.onClose(2)}>
             关闭子窗口
           </button>
-          <button className="example-btn example-btn-primary" onClick={this.onClose}>
+          <button className="example-btn example-btn-primary" onClick={this.onClose()}>
             关闭父窗口
           </button>
         </div>
@@ -117,7 +116,8 @@ class ModalPopUp extends Component {
                  onChange={this.handleChange}/></p>
         <ol className="example-list">
           <li>
-            <button className="example-btn example-btn-default" onClick={(e) => {this.onClick(e, 1)}}>
+            <button className="example-btn example-btn-default"
+                    onClick={this.onClick(1)}>
               打开父模态窗口
             </button>
           </li>

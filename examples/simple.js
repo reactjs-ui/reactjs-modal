@@ -12,36 +12,36 @@ class ModalSimple extends Component {
       title: null,
       footer: null
     };
-    this.onClose = this.onClose.bind(this);
-    this.onClick = this.onClick.bind(this);
   }
 
-  onClick(e, no) {
-    const state = {visible: true};
-    if (!no) {
-      state.title = '基本 Modal 窗口';
-      state.footer = (
-        <div>
-          <button className="example-btn example-btn-primary" onClick={this.onClose}>
-            确认
-          </button>
-          <button className="example-btn example-btn-default" onClick={this.onClose}>
-            取消
-          </button>
-        </div>
-      );
-    } else {
-      state.title = null;
-      state.footer = null;
+  onClick = (no) => {
+    return (e) => {
+      const state = {visible: true};
+      if (!no) {
+        state.title = '基本 Modal 窗口';
+        state.footer = (
+          <div>
+            <button className="example-btn example-btn-primary" onClick={this.onClose}>
+              确认
+            </button>
+            <button className="example-btn example-btn-default" onClick={this.onClose}>
+              取消
+            </button>
+          </div>
+        );
+      } else {
+        state.title = null;
+        state.footer = null;
+      }
+      this.setState(state);
     }
-    this.setState(state);
-  }
+  };
 
-  onClose(e) {
+  onClose = (e) => {
     this.setState({
       visible: false
     });
-  }
+  };
 
   render() {
     const {visible, title, footer} = this.state;
@@ -83,13 +83,14 @@ class ModalSimple extends Component {
       <div className="example">
         <ol className="example-list">
           <li>
-            <button className="example-btn example-btn-default" onClick={(e) => {this.onClick()}}>
+            <button className="example-btn example-btn-default" onClick={this.onClick()}>
               基本 Modal 窗口
             </button>
           </li>
 
           <li>
-            <button className="example-btn example-btn-default" onClick={(e) => {this.onClick(e, true)}}>
+            <button className="example-btn example-btn-default"
+                    onClick={this.onClick(true)}>
               无 header 、无 footer  Modal 窗口
             </button>
           </li>

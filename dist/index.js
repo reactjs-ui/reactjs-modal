@@ -101,7 +101,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -160,7 +160,7 @@ var ReactModal = function (_Component) {
   function ReactModal(props) {
     _classCallCheck(this, ReactModal);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactModal).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ReactModal.__proto__ || Object.getPrototypeOf(ReactModal)).call(this, props));
 
     _this.scrollbarWidth = (0, _scrollbarWidth2.default)();
     _this.onClose = _this.onClose.bind(_this);
@@ -197,12 +197,12 @@ var ReactModal = function (_Component) {
     value: function toggleModal(prevProps) {
       var _this2 = this;
 
-      var _props = this.props;
-      var visible = _props.visible;
-      var animationPosition = _props.animationPosition;
-      var animation = _props.animation;
-      var maskAnimation = _props.maskAnimation;
-      var transitionLeaveTimeout = _props.transitionLeaveTimeout;
+      var _props = this.props,
+          visible = _props.visible,
+          animationPosition = _props.animationPosition,
+          animation = _props.animation,
+          maskAnimation = _props.maskAnimation,
+          transitionLeaveTimeout = _props.transitionLeaveTimeout;
 
       if (visible) {
         if (!prevProps.visible) {
@@ -238,9 +238,9 @@ var ReactModal = function (_Component) {
       }
 
       scrollingEffect = true;
-      var _props2 = this.props;
-      var prefixCls = _props2.prefixCls;
-      var preventTouchmove = _props2.preventTouchmove;
+      var _props2 = this.props,
+          prefixCls = _props2.prefixCls,
+          preventTouchmove = _props2.preventTouchmove;
 
       var classList = document.body.classList;
       var htmlClassList = document.documentElement.classList;
@@ -269,10 +269,10 @@ var ReactModal = function (_Component) {
       }
       scrollingEffect = false;
 
-      var _props3 = this.props;
-      var prefixCls = _props3.prefixCls;
-      var preventTouchmove = _props3.preventTouchmove;
-      var hideAllModal = _props3.hideAllModal;
+      var _props3 = this.props,
+          prefixCls = _props3.prefixCls,
+          preventTouchmove = _props3.preventTouchmove,
+          hideAllModal = _props3.hideAllModal;
 
       if (preventTouchmove) {
         document.body.removeEventListener('touchmove', this.preventTouch, false);
@@ -301,9 +301,9 @@ var ReactModal = function (_Component) {
   }, {
     key: 'onMaskClick',
     value: function onMaskClick(e) {
-      var _props4 = this.props;
-      var closable = _props4.closable;
-      var maskClosable = _props4.maskClosable;
+      var _props4 = this.props,
+          closable = _props4.closable,
+          maskClosable = _props4.maskClosable;
 
       if (e.target === e.currentTarget && closable && maskClosable) {
         this.onClose(e);
@@ -312,9 +312,9 @@ var ReactModal = function (_Component) {
   }, {
     key: 'onKeyDown',
     value: function onKeyDown(e) {
-      var _props5 = this.props;
-      var closable = _props5.closable;
-      var keyboard = _props5.keyboard;
+      var _props5 = this.props,
+          closable = _props5.closable,
+          keyboard = _props5.keyboard;
 
       if (closable && keyboard) {
         if (e.keyCode === 27) {
@@ -331,18 +331,19 @@ var ReactModal = function (_Component) {
   }, {
     key: 'renderMask',
     value: function renderMask(zIndex) {
-      var _props6 = this.props;
-      var mask = _props6.mask;
-      var prefixCls = _props6.prefixCls;
-      var maskAnimation = _props6.maskAnimation;
-      var visible = _props6.visible;
-      var className = _props6.className;
-      var transitionAppearTimeout = _props6.transitionAppearTimeout;
-      var transitionEnterTimeout = _props6.transitionEnterTimeout;
-      var transitionLeaveTimeout = _props6.transitionLeaveTimeout;
+      var _props6 = this.props,
+          mask = _props6.mask,
+          prefixCls = _props6.prefixCls,
+          visible = _props6.visible,
+          className = _props6.className,
+          transitionAppearTimeout = _props6.transitionAppearTimeout,
+          transitionEnterTimeout = _props6.transitionEnterTimeout,
+          transitionLeaveTimeout = _props6.transitionLeaveTimeout;
+      var maskAnimation = this.props.maskAnimation;
 
       if (mask) {
-        var maskElement = visible ? _react2.default.createElement('div', { className: prefixCls + '-mask ' + (className || ''), style: zIndex ? { zIndex: zIndex } : null }) : null;
+        var maskElement = visible ? _react2.default.createElement('div', { className: prefixCls + '-mask ' + (className || ''),
+          style: zIndex ? { zIndex: zIndex } : null }) : null;
         if (maskAnimation) {
           if (typeof maskAnimation === 'boolean') {
             maskAnimation = prefixCls + '-fade';
@@ -366,21 +367,21 @@ var ReactModal = function (_Component) {
   }, {
     key: 'renderModalContent',
     value: function renderModalContent(zIndex) {
-      var _props7 = this.props;
-      var closable = _props7.closable;
-      var prefixCls = _props7.prefixCls;
-      var title = _props7.title;
-      var footer = _props7.footer;
-      var style = _props7.style;
-      var className = _props7.className;
-      var children = _props7.children;
-      var visible = _props7.visible;
-      var bodyStyle = _props7.bodyStyle;
-      var footerStyle = _props7.footerStyle;
-      var position = _props7.position;
-      var transitionAppearTimeout = _props7.transitionAppearTimeout;
-      var transitionEnterTimeout = _props7.transitionEnterTimeout;
-      var transitionLeaveTimeout = _props7.transitionLeaveTimeout;
+      var _props7 = this.props,
+          closable = _props7.closable,
+          prefixCls = _props7.prefixCls,
+          title = _props7.title,
+          footer = _props7.footer,
+          style = _props7.style,
+          className = _props7.className,
+          children = _props7.children,
+          visible = _props7.visible,
+          bodyStyle = _props7.bodyStyle,
+          footerStyle = _props7.footerStyle,
+          position = _props7.position,
+          transitionAppearTimeout = _props7.transitionAppearTimeout,
+          transitionEnterTimeout = _props7.transitionEnterTimeout,
+          transitionLeaveTimeout = _props7.transitionLeaveTimeout;
 
 
       var closeEl = void 0;
@@ -522,9 +523,9 @@ ReactModal.defaultProps = {
 ReactModal.propTypes = {
   prefixCls: _react.PropTypes.string, // Modal 窗口 class，默认为 rc-modal
   className: _react.PropTypes.string, //自定义 class 样式
-  style: _react.PropTypes.object, //	自定义 style 比如 width 或 height
-  bodyStyle: _react.PropTypes.object, //	自定义 modal body 的样式，比如 width height 滚动条等
-  footerStyle: _react.PropTypes.object, //	自定义 modal footer 的样式，比如 width height 滚动条等
+  style: _react.PropTypes.object, // 自定义 style 比如 width 或 height
+  bodyStyle: _react.PropTypes.object, // 自定义 modal body 的样式，比如 width height 滚动条等
+  footerStyle: _react.PropTypes.object, // 自定义 modal footer 的样式，比如 width height 滚动条等
   zIndex: _react.PropTypes.number, // 模态窗口 zIndex
   visible: _react.PropTypes.bool, // Modal 窗口是否可见
   closable: _react.PropTypes.bool, // 是否显示关闭按钮
@@ -546,11 +547,9 @@ ReactModal.propTypes = {
   title: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.element]), //标题
   footer: _react.PropTypes.element, // 底部按钮设置
   children: _react.PropTypes.node, // 窗体内容
-  container: _react.PropTypes.element, //渲染模态窗口容器，默认为 document.body
   preventTouchmove: _react.PropTypes.bool, //当显示模态窗口时，是否阻止 touchmove 事件
   hideAllModal: _react.PropTypes.bool };
 
-// 当打开多个模态窗口时，根据该属性来控制是否关闭所有模态窗口
 exports.default = ReactModal;
 
 /***/ },
@@ -593,14 +592,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * reactjs-modal: https://github.com/reactjs-ui/reactjs-modal
  *
  */
-
 var ReactModalWrap = function (_Component) {
   _inherits(ReactModalWrap, _Component);
 
   function ReactModalWrap(props) {
     _classCallCheck(this, ReactModalWrap);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactModalWrap).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ReactModalWrap.__proto__ || Object.getPrototypeOf(ReactModalWrap)).call(this, props));
 
     _this.state = {
       visible: props.visible
@@ -699,7 +697,7 @@ var ReactModalWrap = function (_Component) {
       return _react2.default.createElement(
         _ReactModal2.default,
         _extends({}, modalProps, { key: this.modalUuid }),
-        props.children
+        this.props.children
       );
     }
   }, {
@@ -720,7 +718,7 @@ ReactModalWrap.modalUuid = 1;
 ReactModalWrap.propTypes = {
   visible: _react.PropTypes.bool, // Modal 窗口是否可见
   children: _react.PropTypes.node,
-  container: _react.PropTypes.element
+  container: _react.PropTypes.element //渲染模态窗口容器，默认为 document.body
 };
 
 exports.default = ReactModalWrap;
