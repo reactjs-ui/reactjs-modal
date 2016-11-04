@@ -1,5 +1,10 @@
 # React Modal 更新日志
 
+## version 0.3.0  升级 (2016-11-4)
+
+* 升级 node dependencies
+* 增加精简版打包发布到 npm
+
 ## version 0.2.2  生成在线例子 (2016-7-29)
 
 * 生成在线例子，方便用户查看在线例子
