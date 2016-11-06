@@ -53,14 +53,6 @@ let webpackConfig = {
         test: /\.jsx?$/,
         loader: 'babel', // 'babel-loader' is also a legal name to reference
         exclude: /(node_modules)/
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader?pack=cleaner'
-      },
-      {
-        test: /\.scss/,
-        loader: 'style-loader!css-loader!postcss-loader?pack=cleaner!sass-loader?outputStyle=expanded'
       }
     ]
   },

@@ -71,10 +71,7 @@ gulp publish
 
 ```javascript
 import React, {Component, PropTypes} from 'react';
-import {render} from 'react-dom';
 import createFragment from 'react-addons-create-fragment';
-import Modal from '../src/script/index';
-import './sass/example.scss';
 
 class ControllableCustomRadio extends Component {
   constructor(props) {
@@ -84,23 +81,23 @@ class ControllableCustomRadio extends Component {
     };
   }
 
-  handleChange(event) {
+  handleChange = (event) => {
     if (this.props.onChange) {
       this.props.onChange(event);
     }
     this.setState({
       value: event.target.value
     });
-  }
+  };
 
   render() {
-    let children = {};
+    const children = {};
     const value = this.props.value || this.state.value;
     React.Children.forEach(this.props.children, (child, i) => {
       const label = (
-        <label style={{marginRight: '10px'}}>
+        <label style={{marginRight: '10px'}} key={i}>
           <input type="radio" name={this.props.name} value={child.props.value} checked={child.props.value === value}
-                 onChange={this.handleChange.bind(this)}/>
+                 onChange={this.handleChange}/>
           {child.props.children}
         </label>
       );
@@ -118,7 +115,15 @@ ControllableCustomRadio.propTypes = {
   children: PropTypes.array
 };
 
+
 /*eslint-disable react/no-multi-comp*/
+import React, {Component, PropTypes} from 'react';
+import {render} from 'react-dom';
+import Modal from 'reactjs-modal';
+import ControllableCustomRadio from './ControllableCustomRadio';
+import 'reactjs-modal/dist/styles/modal.css';
+import './sass/example.scss';
+
 class ModalPosition extends Component {
   constructor(props) {
     super(props);
@@ -126,32 +131,30 @@ class ModalPosition extends Component {
       visible: false,
       position: 'center'
     };
-    this.onClose = this.onClose.bind(this);
-    this.onClick = this.onClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  onClick(e) {
+  onClick = (e) => {
     this.setState({
       visible: true
     });
-  }
+  };
 
-  onClose(e) {
+  onClose = (e) => {
     this.setState({
       visible: false
     });
-  }
+  };
 
-  handleChange(event) {
+  handleChange = (event) => {
     this.setState({
       position: event.target.value
     });
-  }
+  };
 
   render() {
     let modal;
-    let {visible, position} = this.state;
+    const {visible} = this.state;
+    let {position} = this.state;
     if (visible) {
       const footer = (
         <div>
@@ -169,9 +172,9 @@ class ModalPosition extends Component {
       }
       modal = (
         <Modal
-          visible={this.state.visible}
+          visible={visible}
           onClose={this.onClose}
-          title={`Modal 窗口位置 ${position ? (typeof position === 'object' ? 'right: \'10px\', top: \'20px\'' : position)  : ''}`}
+          title={`Modal 窗口位置 ${position ? (typeof position === 'object' ? 'right: \'10px\', top: \'20px\'' : position) : ''}`}
           style={{width: '700px'}}
           footer={footer}
           position={position}
@@ -182,7 +185,7 @@ class ModalPosition extends Component {
           <pre>
             {
               ` <Modal
-  visible={this.state.visible}
+  visible={visible}
   onClose={this.onClose}
   title="Modal窗口位置"
   style={{width: '700px'}}
@@ -202,7 +205,7 @@ class ModalPosition extends Component {
     return (
       <div className="example">
         <p>位置：</p>
-        <ControllableCustomRadio name="position" value={this.state.position} onChange={this.handleChange.bind(this)}>
+        <ControllableCustomRadio name="position" value={this.state.position} onChange={this.handleChange}>
           <option value="left">左</option>
           <option value="right">右</option>
           <option value="top">上</option>

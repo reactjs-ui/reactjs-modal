@@ -1,6 +1,6 @@
 # React Modal 更新日志
 
-## version 0.3.1  升级 (2016-11-4)
+## version 0.3.2  升级 (2016-11-4)
 
 * 升级 node dependencies
 * 增加精简版打包发布到 npm
