@@ -10,7 +10,7 @@ const webpackConfig = {
   devtool: 'source-map', //生成 source map文件
   resolve: {
     //自动扩展文件后缀名
-    extensions: ['', '.js', '.jsx', '.css', '.json']
+    extensions: ['.js', '.jsx', '.css', '.json']
   },
 
   // 入口文件 让webpack用哪个文件作为项目的入口
