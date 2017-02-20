@@ -1,9 +1,15 @@
 # React Modal 更新日志
 
+## version 0.3.3  升级 (2017-02-20)
+
+* 升级 node dependencies
+* 升级 webpack 2.2.1，修改 webpack 配置文件
+
 ## version 0.3.2  升级 (2016-11-4)
 
 * 升级 node dependencies
-* 增加精简版打包发布到 npm
+* 增加精简版打包发布到 npm 
+  执行 gulp publish，然后 cd publish 发吧 npm
 
 ## version 0.2.2  生成在线例子 (2016-7-29)
 
