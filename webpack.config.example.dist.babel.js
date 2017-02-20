@@ -36,7 +36,6 @@ const webpackConfig = {
         test: /\.jsx?$/,
         loader: 'babel-loader', // 'babel-loader' is also a legal name to reference
         exclude: /node_modules/,
-        cacheDirectory: true // 开启缓存
       },
       {
         test: /\.css$/,

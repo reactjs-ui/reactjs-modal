@@ -24,7 +24,7 @@ http://reactjs-ui.github.io/reactjs-modal/
 ## Build Example
 第一次需要先执行前两步操作，再执行第三步。以后修改例子后，只需要执行第三步即可
 
-* 创建 gh-pages 分支，**在执行 git subtree add 命令之前，需确保 gh-pages 分支下至少存在一个文件**
+1. 创建 gh-pages 分支，**在执行 git subtree add 命令之前，需确保 gh-pages 分支下至少存在一个文件**
 ```
 git branch gh-pages
 git checkout gh-pages
@@ -40,13 +40,13 @@ git push
 git checkout master
 ```
 
-* 把分支 gh-pages 添加到本地 subtree 中，执行该命令前，请确保 examples-dist 文件夹不存在
+2. 把分支 gh-pages 添加到本地 subtree 中，执行该命令前，请确保 examples-dist 文件夹不存在
 
 ```
 git subtree add --prefix=examples-dist origin gh-pages --squash
 ```
   
-* 生成在线 examples
+3. 生成在线 examples
 ```
 gulp example:build
 git add -A examples-dist
