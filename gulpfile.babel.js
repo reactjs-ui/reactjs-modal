@@ -146,6 +146,7 @@ gulp.task('publish', () => {
   const exec = childProcess.exec;
   exec('cp -R dist publish');
   exec('cp -R src publish');
+  exec('cp -R examples publish');
 });
 
 
