@@ -209,6 +209,8 @@ render(
 | container | PropTypes.element | 渲染模态窗口容器，默认为 document.body |
 | preventTouchmove| PropTypes.bool | 当显示模态窗口时，是否阻止 touchmove 事件 |
 | hideAllModal| PropTypes.bool | 当打开多个模态窗口时，根据该属性来控制是否关闭所有模态窗口 |
+| hideHeader| PropTypes.bool | 控制是否显示 header |
+| headerStyle| PropTypes.bool | 自定义 modal header 的样式 |
   
 ## Issue
 

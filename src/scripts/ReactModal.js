@@ -158,8 +158,8 @@ class ReactModal extends Component {
     } = this.props;
     let {maskAnimation} = this.props;
     if (mask) {
-      const maskElement = visible ?
-        (<div className={`${prefixCls}-mask ${className || ''}`}
+      const maskElement = visible
+        ? (<div className={`${prefixCls}-mask ${className || ''}`}
               style={zIndex ? {zIndex} : null} />) : null;
       if (maskAnimation) {
         if (typeof maskAnimation === 'boolean') {
@@ -184,8 +184,8 @@ class ReactModal extends Component {
 
   renderModalContent(zIndex) {
     const {
-      closable, prefixCls, title, footer, style,
-      className, children, visible, bodyStyle, footerStyle, position,
+      closable, prefixCls, hideHeader, title, footer, style,
+      className, children, visible, headerStyle, bodyStyle, footerStyle, position,
       transitionAppearTimeout, transitionEnterTimeout, transitionLeaveTimeout
     } = this.props;
 
@@ -200,8 +200,8 @@ class ReactModal extends Component {
     }
 
     let headerEl;
-    if (title) {
-      headerEl = (<div className={`${prefixCls}-header`}>
+    if (!hideHeader) {
+      headerEl = (<div className={`${prefixCls}-header`} style={headerStyle}>
         {closeEl}
         <div className={`${prefixCls}-title`}>
           {title}
@@ -292,6 +292,7 @@ class ReactModal extends Component {
 
 ReactModal.defaultProps = {
   prefixCls: 'rc-modal',
+  hideHeader: false,
   className: '',
   mask: true,
   closable: true,
@@ -308,6 +309,7 @@ ReactModal.propTypes = {
   prefixCls: PropTypes.string, // Modal 窗口 class，默认为 rc-modal
   className: PropTypes.string, //自定义 class 样式
   style: PropTypes.object, // 自定义 style 比如 width 或 height
+  headerStyle: PropTypes.object, // 自定义 modal header 的样式
   bodyStyle: PropTypes.object, // 自定义 modal body 的样式，比如 width height 滚动条等
   footerStyle: PropTypes.object, // 自定义 modal footer 的样式，比如 width height 滚动条等
   zIndex: PropTypes.number, // 模态窗口 zIndex
@@ -341,6 +343,7 @@ ReactModal.propTypes = {
     PropTypes.string,
     PropTypes.element
   ]), //标题
+  hideHeader: PropTypes.bool, // 控制是否显示 header
   footer: PropTypes.element, // 底部按钮设置
   children: PropTypes.node, // 窗体内容
   preventTouchmove: PropTypes.bool, //当显示模态窗口时，是否阻止 touchmove 事件

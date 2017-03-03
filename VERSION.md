@@ -1,5 +1,9 @@
 # React Modal 更新日志
 
+## version 0.3.5  升级 (2017-03-03)
+
+* 新增选项 hideHeader 和 headerStyle，用来隐藏 header 和 设置 header style
+
 ## version 0.3.4  升级 (2017-02-20)
 
 * 升级 node dependencies
