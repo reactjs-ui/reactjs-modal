@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Modal from '../src/scripts/index';
-import '../src/sass/modal.scss';
+import Modal from '../js/index';
+import '../sass/modal.scss';
 import './sass/example.scss';
 
 class ModalPopUp extends Component {
@@ -60,10 +60,10 @@ class ModalPopUp extends Component {
         bodyStyle={{height: '300px'}}
         footer={(
           <div>
-          <button className="example-btn example-btn-primary" onClick={this.onClick(2)}>
-            打开子窗口
-          </button>
-        </div>
+            <button className="example-btn example-btn-primary" onClick={this.onClick(2)}>
+              打开子窗口
+            </button>
+          </div>
         )}
         animation={animation}
         maskAnimation={maskAnimation}
@@ -86,13 +86,13 @@ class ModalPopUp extends Component {
         bodyStyle={{height: '200px'}}
         footer={(
           <div>
-          <button className="example-btn example-btn-primary" onClick={this.onClose(2)}>
-            关闭子窗口
-          </button>
-          <button className="example-btn example-btn-primary" onClick={this.onClose()}>
-            关闭父窗口
-          </button>
-        </div>
+            <button className="example-btn example-btn-primary" onClick={this.onClose(2)}>
+              关闭子窗口
+            </button>
+            <button className="example-btn example-btn-primary" onClick={this.onClose()}>
+              关闭父窗口
+            </button>
+          </div>
         )}
         animation={animation}
         maskAnimation={maskAnimation}

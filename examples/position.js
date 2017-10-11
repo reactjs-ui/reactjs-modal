@@ -1,8 +1,8 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Modal from '../src/scripts/index';
+import Modal from '../js/index';
 import ControllableCustomRadio from './ControllableCustomRadio';
-import '../src/sass/modal.scss';
+import '../sass/modal.scss';
 import './sass/example.scss';
 
 class ModalPosition extends Component {

@@ -1,7 +1,5 @@
 .idea
 node_modules
 .DS_Store
-dist
-src/styles
-publish/dist
-publish/src
+publish
+!publish/package.json

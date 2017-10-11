@@ -8,73 +8,21 @@ This is a react component for modal.
 npm install reactjs-modal --save
 ```
 
-## Example
-
-```
-npm install
-gulp example
-```
-
-http://localhost:9090
-
-## Online Example
-
-http://reactjs-ui.github.io/reactjs-modal/
-
-## Build Example
-第一次需要先执行前两步操作，再执行第三步。以后修改例子后，只需要执行第三步即可
-
-1. 创建 gh-pages 分支，**在执行 git subtree add 命令之前，需确保 gh-pages 分支下至少存在一个文件**
-```
-git branch gh-pages
-git checkout gh-pages
-rm -rf *     //隐藏文件需要单独删除，结合命令 ls -a
-git add -A
-git commit -m "clear gh-page"
-git push --set-upstream origin gh-pages
-vim README.md
-//输入一些内容
-git add README.md
-git commit -m "README.md"
-git push
-git checkout master
-```
-
-2. 把分支 gh-pages 添加到本地 subtree 中，执行该命令前，请确保 examples-dist 文件夹不存在
-
-```
-git subtree add --prefix=examples-dist origin gh-pages --squash
-```
-  
-3. 生成在线 examples
-```
-gulp example:build
-git add -A examples-dist
-git commit -m "Update online examples"
-git subtree push --prefix=examples-dist origin gh-pages --squash
-git push
-```
-
-## Build
-
-```
-gulp build
-```
-
-## Publish
-
-```
-gulp publish
-cd publish && npm publish
-```
-
 ## Usage
 
 ```javascript
-import React, {Component, PropTypes} from 'react';
-import createFragment from 'react-addons-create-fragment';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class ControllableCustomRadio extends Component {
+  static propTypes = {
+    defaultValue: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+    name: PropTypes.string,
+    children: PropTypes.array
+  };
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -92,37 +40,31 @@ class ControllableCustomRadio extends Component {
   };
 
   render() {
-    const children = {};
     const value = this.props.value || this.state.value;
-    React.Children.forEach(this.props.children, (child, i) => {
-      const label = (
+    const children = React.Children.map(this.props.children, (child, i) => {
+      return (
         <label style={{marginRight: '10px'}} key={i}>
           <input type="radio" name={this.props.name} value={child.props.value} checked={child.props.value === value}
                  onChange={this.handleChange}/>
           {child.props.children}
         </label>
       );
-      children[`label${i}`] = label;
     });
-    return <div>{createFragment(children)}</div>;
+
+    return (
+      <div>{children}</div>
+    );
   }
 }
 
-ControllableCustomRadio.propTypes = {
-  defaultValue: PropTypes.string,
-  onChange: PropTypes.func,
-  value: PropTypes.string,
-  name: PropTypes.string,
-  children: PropTypes.array
-};
+export default ControllableCustomRadio;
 
 
-/*eslint-disable react/no-multi-comp*/
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Modal from 'reactjs-modal';
+import Modal from '../src/scripts/index';
 import ControllableCustomRadio from './ControllableCustomRadio';
-import 'reactjs-modal/dist/styles/modal.css';
+import '../src/sass/modal.scss';
 import './sass/example.scss';
 
 class ModalPosition extends Component {
@@ -236,6 +178,7 @@ render(
 
 ```
 
+
 ## Options
 
 | 选项        | 类型   |  功能  |
@@ -268,11 +211,72 @@ render(
 | hideHeader| PropTypes.bool | 控制是否显示 header |
 | headerStyle| PropTypes.bool | 自定义 modal header 的样式 |
  
+
+## Example
+
+```
+npm install
+npm start
+```
+
+http://localhost:9090
+
+## Online Example
+
+http://reactjs-ui.github.io/reactjs-modal/
+
+## Build Example
+第一次需要先执行前两步操作，再执行第三步。以后修改例子后，只需要执行第三步即可
+
+1. 创建 gh-pages 分支，**在执行 git subtree add 命令之前，需确保 gh-pages 分支下至少存在一个文件**
+```
+git checkout -b gh-pages
+rm -rf *     //隐藏文件需要单独删除，结合命令 ls -a
+vim .gitignore //输入一些内容
+git add .
+git commit -m "init branch gh-pages"
+git push --set-upstream origin gh-pages
+git checkout master
+```
+
+2. 把分支 gh-pages 添加到本地 subtree 中，执行该命令前，请确保 examples-dist 文件夹不存在
+
+```
+git subtree add --prefix=examples-dist origin gh-pages --squash
+```
   
+3. 生成在线 examples
+
+```
+npm run build:examples
+git add examples-dist
+git commit -m "Update online examples"
+git subtree pull --prefix=examples-dist origin gh-pages
+git subtree push --prefix=examples-dist origin gh-pages --squash
+git push
+```
+
+4 使用以下命令一键发布在线例子
+```bash
+npm run examples:publish
+```
+
+## Build
+
+```
+npm run build
+```
+
+## Publish
+
+```
+npm run build:publish
+```
+
 ## Issue
 
 https://github.com/reactjs-ui/reactjs-modal/issues
 
-## Version
+## Change Log
 
-Please view [here](./VERSION.md)
+Please view [here](CHANGELOG.md)

@@ -1,7 +1,15 @@
-import React, {Component, PropTypes} from 'react';
-import createFragment from 'react-addons-create-fragment';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class ControllableCustomRadio extends Component {
+  static propTypes = {
+    defaultValue: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.string,
+    name: PropTypes.string,
+    children: PropTypes.array
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -19,28 +27,21 @@ class ControllableCustomRadio extends Component {
   };
 
   render() {
-    const children = {};
     const value = this.props.value || this.state.value;
-    React.Children.forEach(this.props.children, (child, i) => {
-      const label = (
+    const children = React.Children.map(this.props.children, (child, i) => {
+      return (
         <label style={{marginRight: '10px'}} key={i}>
           <input type="radio" name={this.props.name} value={child.props.value} checked={child.props.value === value}
                  onChange={this.handleChange}/>
           {child.props.children}
         </label>
       );
-      children[`label${i}`] = label;
     });
-    return <div>{createFragment(children)}</div>;
+
+    return (
+      <div>{children}</div>
+    );
   }
 }
-
-ControllableCustomRadio.propTypes = {
-  defaultValue: PropTypes.string,
-  onChange: PropTypes.func,
-  value: PropTypes.string,
-  name: PropTypes.string,
-  children: PropTypes.array
-};
 
 export default ControllableCustomRadio;

@@ -1,10 +1,10 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlwebpackPlugin from 'html-webpack-plugin';
-import precss from 'precss';
+import flexbugs from 'postcss-flexbugs-fixes'; // 修复 flexbox 已知的 bug
 import autoprefixer from 'autoprefixer';
 
-const ip = 'localhost';
+const ip = '0.0.0.0';
 const port = 9090;
 const hotDevServer = 'webpack/hot/dev-server';
 // https://github.com/webpack/webpack-dev-server
@@ -20,6 +20,7 @@ const webpackConfig = {
     reasons: true
   },
   devServer: {
+    //指定根目录路径，比如访问 eruda.min.js 时，只需 http://localhost:9090/eruda.min.js 即可
     contentBase: './examples',
     historyApiFallback: true,
     hot: true,
@@ -31,12 +32,13 @@ const webpackConfig = {
       poll: 1000
     },
     quiet: false, // 设为true，不把任何信息输出到控制台
-    publicPath: '/'
+    publicPath: '/',
+    open: true,
   },
 
   resolve: {
     //自动扩展文件后缀名
-    extensions: ['.js', '.jsx', '.css']
+    extensions: ['.js', '.jsx', '.scss']
   },
 
   // 入口文件 让webpack用哪个文件作为项目的入口
@@ -57,57 +59,70 @@ const webpackConfig = {
   },
 
   module: {
-    loaders: [
+    rules: [
       // https://github.com/MoOx/eslint-loader
       {
         enforce: 'pre',
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'eslint-loader'
+        use: {
+          loader: 'eslint-loader',
+          options: {
+            configFile: '.eslintrc',
+            emitError: true, // 验证失败，终止
+          }
+        }
       },
       {
-        test: /\.jsx?$/,
-        loader: 'babel-loader', // 'babel-loader' is also a legal name to reference
+        test: /\.js$/,
         exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader!postcss-loader?pack=cleaner'
+        use: 'babel-loader',
       },
       {
         test: /\.scss/,
-        loader: 'style-loader!css-loader!postcss-loader?pack=cleaner!sass-loader?outputStyle=expanded'
-      }
+        use: ['style-loader', {
+          loader: 'css-loader',
+          options: {
+            sourceMap: true,
+          }
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true,
+            // postcss plugins https://github.com/postcss/postcss/blob/master/docs/plugins.md
+            plugins: [
+              flexbugs(),
+              autoprefixer({
+                flexbox: 'no-2009',
+                browsers: ['Chrome >= 35', 'Firefox >= 38',
+                  'Android >= 4.3', 'iOS >=8', 'Safari >= 8'],
+              })
+            ]
+          }
+        }, {
+          loader: 'sass-loader',
+          options: {
+            sourceMap: true, // 必须保留
+            outputStyle: 'expanded', // 不压缩，设为 compressed 表示压缩
+            precision: 15, // 设置小数精度
+          }
+        }]
+      },
     ]
   },
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(), // 热部署替换模块
-    new webpack.NoErrorsPlugin(), //
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.LoaderOptionsPlugin({
-      options: {
-        // eslint 配置
-        eslint: {
-          emitError: true, // 验证失败，终止
-          configFile: '.eslintrc'
-        },
-        postcss () {
-          return {
-            defaults: [precss, autoprefixer],
-            cleaner: [autoprefixer({
-              browsers: ['Chrome >= 35', 'Firefox >= 38', 'Edge >= 12',
-                'Explorer >= 8', 'Android >= 4.3', 'iOS >=8', 'Safari >= 8']
-            })]
-          };
-        },
-      }
+      debug: true,
     })
   ]
 };
 
 //创建 HtmlWebpackPlugin 的实例
 // https://www.npmjs.com/package/html-webpack-plugin
-const entry = webpackConfig.entry;
+const {entry} = webpackConfig;
 
 // 为 HtmlwebpackPlugin 设置配置项，与 entry 键对应，根据需要设置其参数值
 const htmlwebpackPluginConfig = {

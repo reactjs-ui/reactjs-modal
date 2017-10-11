@@ -1,5 +1,11 @@
 # React Modal 更新日志
 
+## version 0.4.0  升级 (2017-10-11)
+
+* 去掉了 babel-preset-es2015，改用 babel-preset-env
+* 升级到 react 16 以及其他依赖
+* 调整了打包和发布命令
+
 ## version 0.3.5  升级 (2017-03-03)
 
 * 新增选项 hideHeader 和 headerStyle，用来隐藏 header 和 设置 header style

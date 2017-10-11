@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Modal from '../src/scripts/index';
-import '../src/sass/modal.scss';
+import Modal from '../js/index';
+import '../sass/modal.scss';
 import './sass/example.scss';
 
 class ModalAnimation extends Component {
@@ -30,7 +30,7 @@ class ModalAnimation extends Component {
           animationPosition: null
         });
       }
-    }
+    };
   };
 
   onClose = () => {
@@ -41,7 +41,6 @@ class ModalAnimation extends Component {
 
   render() {
     const {visible, animationPosition} = this.state;
-    //if (visible) {
     const footer = (
       <div>
         <button className="example-btn example-btn-primary" onClick={this.onClose}>
@@ -67,8 +66,8 @@ class ModalAnimation extends Component {
         <p>传入animationPosition指定其动画原始位置</p>
         <h3>例子代码</h3>
         <pre>
-            {
-              ` <Modal
+          {
+            ` <Modal
     visible={visible}
     onClose={this.onClose}
     title={'动画效果 Modal 窗口'}
@@ -81,11 +80,10 @@ class ModalAnimation extends Component {
   <p>可以设置 modal 窗口 动画效果</p>
   <p>传入animationPosition指定其动画原始位置</p>
 </Modal>`
-            }
-          </pre>
+          }
+        </pre>
       </Modal>
     );
-    //}
 
     return (
       <div className="example">
@@ -111,5 +109,5 @@ class ModalAnimation extends Component {
 }
 
 render(
-  <ModalAnimation />, document.getElementById('layout')
+  <ModalAnimation/>, document.getElementById('layout')
 );

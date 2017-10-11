@@ -1,7 +1,7 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {render} from 'react-dom';
-import Modal from '../src/scripts/index';
-import '../src/sass/modal.scss';
+import Modal from '../js/index';
+import '../sass/modal.scss';
 import './sass/example.scss';
 
 class ModalSwitching extends Component {
@@ -87,10 +87,10 @@ class ModalSwitching extends Component {
         bodyStyle={{height: '200px'}}
         footer={(
           <div>
-          <button className="example-btn example-btn-primary" onClick={this.onClose(1)}>
-            切换
-          </button>
-        </div>
+            <button className="example-btn example-btn-primary" onClick={this.onClose(1)}>
+              切换
+            </button>
+          </div>
         )}
         animation={animation}
         maskAnimation={maskAnimation}
@@ -113,10 +113,10 @@ class ModalSwitching extends Component {
         bodyStyle={{height: '300px'}}
         footer={(
           <div>
-          <button className="example-btn example-btn-primary" onClick={this.onClose(2)}>
-            切换
-          </button>
-        </div>
+            <button className="example-btn example-btn-primary" onClick={this.onClose(2)}>
+              切换
+            </button>
+          </div>
         )}
         animation={animation}
         maskAnimation={maskAnimation}
