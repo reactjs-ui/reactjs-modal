@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import ReactModal from './ReactModal';
 
@@ -82,12 +83,12 @@ class ReactModalWrap extends Component {
     if (!this.modalUuid) {
       this.modalUuid = `modal${ReactModalWrap.modalUuid++}`;
     }
-    const props = this.props;
+
     const modalProps = {
-      ...props,
+      ...this.props,
       visible: this.state.visible
     };
-    //设置 key 不会重复创建
+    // 设置 key 不会重复创建
     return (<ReactModal {...modalProps} key={this.modalUuid}>
       {this.props.children}
     </ReactModal>);

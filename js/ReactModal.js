@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import scrollbarWidth from 'perfect-dom/lib/scrollbarWidth';
 import checkBodyScrollbar from 'perfect-dom/lib/checkBodyScrollbar';
@@ -8,7 +9,7 @@ let scrollingEffect = false;
 const positionKey = ['left', 'right', 'top', 'bottom'];
 
 function setTransformOrigin(node, value) {
-  const style = node.style;
+  const {style} = node;
   ['Webkit', 'Moz', 'Ms', 'ms'].forEach((prefix) => {
     if (style[`${prefix}TransformOrigin`] !== undefined) {
       style[`${prefix}TransformOrigin`] = value;
@@ -23,13 +24,69 @@ function setTransformOrigin(node, value) {
  *
  */
 class ReactModal extends Component {
+  static propTypes = {
+    prefixCls: PropTypes.string, // Modal 窗口 class，默认为 rc-modal
+    className: PropTypes.string, //自定义 class 样式
+    style: PropTypes.object, // 自定义 style 比如 width 或 height
+    headerStyle: PropTypes.object, // 自定义 modal header 的样式
+    bodyStyle: PropTypes.object, // 自定义 modal body 的样式，比如 width height 滚动条等
+    footerStyle: PropTypes.object, // 自定义 modal footer 的样式，比如 width height 滚动条等
+    zIndex: PropTypes.number, // 模态窗口 zIndex
+    visible: PropTypes.bool, // Modal 窗口是否可见
+    closable: PropTypes.bool, // 是否显示关闭按钮
+    onClose: PropTypes.func, // 关闭回调函数
+    keyboard: PropTypes.bool, // 按 esc 是否关闭窗口
+    mask: PropTypes.bool, // 是否显示遮罩效果
+    maskClosable: PropTypes.bool, //设为 true，当点击遮罩时，关闭窗口
+    // 模态窗口显示位置，当设为字符串时，支持 top left right bottom center
+    // left-top left-bottom right-top right-bottom， 设置对象表示其坐标 {x:number,y:number}
+    position: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object
+    ]),
+    animationPosition: PropTypes.object, //基于指定位置渲染动画，格式为： { x: 10,y: 20}
+    // 窗体是否有动画效果，如果设为 false，则不启用动画，设为 true，使用默认的动画，字符串表示自定义的动画样式
+    animation: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string
+    ]),
+    //  mask是否有动画效果，如果设为 false，则不启用动画，设为 true，使用默认的动画，字符串表示自定义的动画样式
+    maskAnimation: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.string
+    ]),
+    transitionAppearTimeout: PropTypes.number, //动画出现持续时间
+    transitionEnterTimeout: PropTypes.number, //动画进入持续时间
+    transitionLeaveTimeout: PropTypes.number, //动画离开持续时间
+    title: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element
+    ]), //标题
+    hideHeader: PropTypes.bool, // 控制是否显示 header
+    footer: PropTypes.element, // 底部按钮设置
+    children: PropTypes.node, // 窗体内容
+    preventTouchmove: PropTypes.bool, //当显示模态窗口时，是否阻止 touchmove 事件
+    hideAllModal: PropTypes.bool, // 当打开多个模态窗口时，根据该属性来控制是否关闭所有模态窗口
+  };
+
+  static defaultProps = {
+    prefixCls: 'rc-modal',
+    hideHeader: false,
+    className: '',
+    mask: true,
+    closable: true,
+    onClose: () => {
+    },
+    position: 'center',
+    transitionAppearTimeout: 300, // 动画出现持续时间
+    transitionEnterTimeout: 300, // 动画进入持续时间
+    transitionLeaveTimeout: 300,  // 动画离开持续时间
+    hideAllModal: true
+  };
+
   constructor(props) {
     super(props);
     this.scrollbarWidth = scrollbarWidth();
-    this.onClose = this.onClose.bind(this);
-    this.onMaskClick = this.onMaskClick.bind(this);
-    this.onKeyDown = this.onKeyDown.bind(this);
-    this.preventTouch = this.preventTouch.bind(this);
   }
 
   componentDidMount() {
@@ -83,7 +140,7 @@ class ReactModal extends Component {
 
     scrollingEffect = true;
     const {prefixCls, preventTouchmove} = this.props;
-    const classList = document.body.classList;
+    const {classList} = document.body;
     const htmlClassList = document.documentElement.classList;
     const scrollingClassName = `${prefixCls}-open`;
     classList.add(scrollingClassName);
@@ -113,7 +170,7 @@ class ReactModal extends Component {
     }
 
     if (hideAllModal) {
-      const classList = document.body.classList;
+      const {classList} = document.body;
       const htmlClassList = document.documentElement.classList;
       const scrollingClassName = `${prefixCls}-open`;
       classList.remove(scrollingClassName);
@@ -126,30 +183,30 @@ class ReactModal extends Component {
   }
 
   // 关闭 modal 窗口
-  onClose(e) {
+  onClose = (e) => {
     this.props.onClose(e);
-  }
+  };
 
-  onMaskClick(e) {
+  onMaskClick = (e) => {
     const {closable, maskClosable} = this.props;
     if (e.target === e.currentTarget && closable && maskClosable) {
       this.onClose(e);
     }
-  }
+  };
 
-  onKeyDown(e) {
+  onKeyDown = (e) => {
     const {closable, keyboard} = this.props;
     if (closable && keyboard) {
       if (e.keyCode === 27) {
         this.onClose(e);
       }
     }
-  }
+  };
 
-  preventTouch(event) {
+  preventTouch = (event) => {
     event.preventDefault();
     event.stopPropagation();
-  }
+  };
 
   renderMask(zIndex) {
     const {
@@ -160,7 +217,7 @@ class ReactModal extends Component {
     if (mask) {
       const maskElement = visible
         ? (<div className={`${prefixCls}-mask ${className || ''}`}
-              style={zIndex ? {zIndex} : null} />) : null;
+                style={zIndex ? {zIndex} : null}/>) : null;
       if (maskAnimation) {
         if (typeof maskAnimation === 'boolean') {
           maskAnimation = `${prefixCls}-fade`;
@@ -289,65 +346,5 @@ class ReactModal extends Component {
     </div>);
   }
 }
-
-ReactModal.defaultProps = {
-  prefixCls: 'rc-modal',
-  hideHeader: false,
-  className: '',
-  mask: true,
-  closable: true,
-  onClose: () => {
-  },
-  position: 'center',
-  transitionAppearTimeout: 300, //动画出现持续时间
-  transitionEnterTimeout: 300, //动画进入持续时间
-  transitionLeaveTimeout: 300,  //动画离开持续时间
-  hideAllModal: true
-};
-
-ReactModal.propTypes = {
-  prefixCls: PropTypes.string, // Modal 窗口 class，默认为 rc-modal
-  className: PropTypes.string, //自定义 class 样式
-  style: PropTypes.object, // 自定义 style 比如 width 或 height
-  headerStyle: PropTypes.object, // 自定义 modal header 的样式
-  bodyStyle: PropTypes.object, // 自定义 modal body 的样式，比如 width height 滚动条等
-  footerStyle: PropTypes.object, // 自定义 modal footer 的样式，比如 width height 滚动条等
-  zIndex: PropTypes.number, // 模态窗口 zIndex
-  visible: PropTypes.bool, // Modal 窗口是否可见
-  closable: PropTypes.bool, // 是否显示关闭按钮
-  onClose: PropTypes.func, // 关闭回调函数
-  keyboard: PropTypes.bool, // 按 esc 是否关闭窗口
-  mask: PropTypes.bool, // 是否显示遮罩效果
-  maskClosable: PropTypes.bool, //设为 true，当点击遮罩时，关闭窗口
-  // 模态窗口显示位置，当设为字符串时，支持 top left right bottom center
-  // left-top left-bottom right-top right-bottom， 设置对象表示其坐标 {x:number,y:number}
-  position: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
-  animationPosition: PropTypes.object, //基于指定位置渲染动画，格式为： { x: 10,y: 20}
-  // 窗体是否有动画效果，如果设为 false，则不启用动画，设为 true，使用默认的动画，字符串表示自定义的动画样式
-  animation: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string
-  ]),
-  //  mask是否有动画效果，如果设为 false，则不启用动画，设为 true，使用默认的动画，字符串表示自定义的动画样式
-  maskAnimation: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string
-  ]),
-  transitionAppearTimeout: PropTypes.number, //动画出现持续时间
-  transitionEnterTimeout: PropTypes.number, //动画进入持续时间
-  transitionLeaveTimeout: PropTypes.number, //动画离开持续时间
-  title: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.element
-  ]), //标题
-  hideHeader: PropTypes.bool, // 控制是否显示 header
-  footer: PropTypes.element, // 底部按钮设置
-  children: PropTypes.node, // 窗体内容
-  preventTouchmove: PropTypes.bool, //当显示模态窗口时，是否阻止 touchmove 事件
-  hideAllModal: PropTypes.bool, // 当打开多个模态窗口时，根据该属性来控制是否关闭所有模态窗口
-};
 
 export default ReactModal;
